@@ -183,7 +183,7 @@ export function UploadSection() {
                   value={formData.name}
                   onChange={handleInputChange}
                   placeholder="Seu nome completo"
-                  className="bg-background border-border focus:border-primary"
+                  className="w-full"
                 />
               </div>
               
@@ -197,7 +197,7 @@ export function UploadSection() {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="seu@email.com"
-                  className="bg-background border-border focus:border-primary"
+                  className="w-full"
                 />
               </div>
             </div>
@@ -212,7 +212,7 @@ export function UploadSection() {
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="(11) 99999-9999"
-                className="bg-background border-border focus:border-primary"
+                className="w-full"
               />
             </div>
 
