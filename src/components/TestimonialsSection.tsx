@@ -82,7 +82,7 @@ export function TestimonialsSection() {
             <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
               <Star className="w-4 h-4 text-primary" />
             </div>
-            <span>500+ Avaliações 5 Estrelas</span>
+            <span>200+ Avaliações 5 Estrelas</span>
           </div>
           <div className="flex items-center space-x-2 text-muted-foreground">
             <div className="w-8 h-8 bg-accent/20 rounded-full flex items-center justify-center">

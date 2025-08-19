@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import gallery1 from "@/assets/gallery-1.jpg";
-import gallery2 from "@/assets/gallery-2.jpg";
+import gallery2 from "@/assets/3d-miniature-result.jpg";
 
 const galleryImages = [
   {
@@ -120,7 +120,7 @@ export function GallerySection() {
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mt-16">
           <div className="text-center">
-            <div className="text-4xl font-bold font-tech text-primary mb-2">500+</div>
+            <div className="text-4xl font-bold font-tech text-primary mb-2">200+</div>
             <div className="text-muted-foreground">Miniaturas Criadas</div>
           </div>
           <div className="text-center">
@@ -128,8 +128,8 @@ export function GallerySection() {
             <div className="text-muted-foreground">Clientes Satisfeitos</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold font-tech text-accent mb-2">7 dias</div>
-            <div className="text-muted-foreground">Prazo de Entrega</div>
+            <div className="text-4xl font-bold font-tech text-accent mb-2">A combinar</div>
+            <div className="text-muted-foreground">Entrega</div>
           </div>
         </div>
       </div>

@@ -28,9 +28,18 @@ export function Footer() {
           <div className="space-y-4">
             <h4 className="font-bold">Contato</h4>
             <div className="space-y-2 text-sm text-muted-foreground">
-              <div>contato@3dmax.com.br</div>
-              <div>(11) 99999-9999</div>
-              <div>São Paulo, SP</div>
+              <div>andrewsfranco93@gmail.com</div>
+              <div>
+                <a 
+                  href="https://api.whatsapp.com/send/?phone=5551981220279&text&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors"
+                >
+                  (51) 98122-0279
+                </a>
+              </div>
+              <div>Rio Grande do Sul, RS</div>
             </div>
           </div>
 

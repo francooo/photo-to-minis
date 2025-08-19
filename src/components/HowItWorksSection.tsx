@@ -83,7 +83,7 @@ export function HowItWorksSection() {
         <div className="text-center mt-16">
           <div className="inline-flex items-center space-x-4 bg-gradient-card rounded-full px-8 py-4 border border-border">
             <div className="w-4 h-4 bg-accent rounded-full animate-glow"></div>
-            <span className="font-medium">Prazo de entrega: 7 dias úteis</span>
+            <span className="font-medium">Entrega a combinar</span>
           </div>
         </div>
       </div>

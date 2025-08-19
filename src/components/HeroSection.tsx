@@ -44,7 +44,7 @@ export function HeroSection() {
             </Button>
             
             <p className="text-sm text-muted-foreground">
-              ⚡ Entrega em 7 dias úteis
+              ⚡ Entrega a combinar
             </p>
           </div>
         </div>
