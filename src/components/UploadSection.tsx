@@ -96,6 +96,22 @@ export function UploadSection() {
 
       if (dbError) throw dbError;
 
+      // Send email notification
+      try {
+        await supabase.functions.invoke('send-order-notification', {
+          body: {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            photo_url: urlData.publicUrl
+          }
+        });
+        console.log('Email notification sent successfully');
+      } catch (emailError) {
+        console.error('Error sending email notification:', emailError);
+        // Don't block the success flow if email fails
+      }
+
       setIsSuccess(true);
       toast({
         title: "Pedido enviado com sucesso!",
@@ -154,11 +170,11 @@ export function UploadSection() {
           </p>
         </div>
 
-        <Card className="card-glow max-w-2xl mx-auto">
+        <Card className="card-glow max-w-2xl mx-auto p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="name">Nome Completo *</Label>
+                <Label htmlFor="name" className="text-foreground font-medium">Nome Completo *</Label>
                 <Input
                   id="name"
                   name="name"
@@ -167,11 +183,12 @@ export function UploadSection() {
                   value={formData.name}
                   onChange={handleInputChange}
                   placeholder="Seu nome completo"
+                  className="bg-background border-border focus:border-primary"
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="email">E-mail *</Label>
+                <Label htmlFor="email" className="text-foreground font-medium">E-mail *</Label>
                 <Input
                   id="email"
                   name="email"
@@ -180,12 +197,13 @@ export function UploadSection() {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="seu@email.com"
+                  className="bg-background border-border focus:border-primary"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone">Telefone *</Label>
+              <Label htmlFor="phone" className="text-foreground font-medium">Telefone *</Label>
               <Input
                 id="phone"
                 name="phone"
@@ -194,12 +212,13 @@ export function UploadSection() {
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="(11) 99999-9999"
+                className="bg-background border-border focus:border-primary"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="photo">Sua Foto *</Label>
-              <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary transition-colors">
+              <Label htmlFor="photo" className="text-foreground font-medium">Sua Foto *</Label>
+              <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary transition-colors bg-muted/30">
                 <input
                   id="photo"
                   type="file"
