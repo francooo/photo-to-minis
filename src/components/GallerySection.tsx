@@ -3,7 +3,8 @@ import { ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import gallery1 from "@/assets/gallery-1.jpg";
-import gallery2 from "@/assets/3d-miniature-result.jpg";
+import galleryAngels from "@/assets/gallery-angels.png";
+import galleryHulk from "@/assets/gallery-hulk.png";
 
 const galleryImages = [
   {
@@ -12,14 +13,14 @@ const galleryImages = [
     description: "Coleção de miniaturas personalizadas com riqueza de detalhes",
   },
   {
-    src: gallery2,
-    title: "Processo de Impressão",
-    description: "Nossa impressora 3D de alta precisão em ação",
+    src: galleryAngels,
+    title: "Anjos Esculpidos",
+    description: "Estátuas de anjos com detalhes impressionantes em 3D",
   },
   {
-    src: gallery1,
-    title: "Resultados Incríveis",
-    description: "Veja a qualidade e precisão dos nossos trabalhos",
+    src: galleryHulk,
+    title: "Personagens Heróicos",
+    description: "Figuras de ação com qualidade profissional e acabamento perfeito",
   },
 ];
 
