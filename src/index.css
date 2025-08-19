@@ -157,7 +157,39 @@ All colors MUST be HSL.
     background: var(--gradient-button);
     border-radius: inherit;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: xor;
-    -webkit-mask-composite: xor;
+    mask-composite: subtract;
+    -webkit-mask-composite: source-out;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Form styles */
+  .form-input {
+    @apply bg-background border-input text-foreground;
+    transition: all 0.2s ease;
+  }
+
+  .form-input:focus {
+    @apply border-primary ring-2 ring-primary/20;
+    outline: none;
+  }
+
+  .form-input:hover {
+    @apply border-primary/50;
+  }
+
+  /* File upload area */
+  .file-upload-area {
+    @apply border-2 border-dashed border-muted rounded-lg p-8 text-center transition-all duration-200;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .file-upload-area:hover {
+    @apply border-primary bg-primary/5;
+  }
+
+  .file-upload-area:focus-within {
+    @apply border-primary ring-2 ring-primary/20;
   }
 }

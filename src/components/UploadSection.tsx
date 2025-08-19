@@ -19,6 +19,7 @@ export function UploadSection() {
   const { toast } = useToast();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('Input change:', e.target.name, e.target.value);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -27,6 +28,7 @@ export function UploadSection() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
+    console.log('File selected:', selectedFile);
     if (selectedFile) {
       // Validate file type
       if (!selectedFile.type.startsWith('image/')) {
@@ -54,6 +56,34 @@ export function UploadSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate required fields
+    if (!formData.name.trim()) {
+      toast({
+        title: "Nome obrigatório",
+        description: "Por favor, preencha seu nome completo",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!formData.email.trim()) {
+      toast({
+        title: "E-mail obrigatório",
+        description: "Por favor, preencha seu e-mail",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!formData.phone.trim()) {
+      toast({
+        title: "Telefone obrigatório",
+        description: "Por favor, preencha seu telefone",
+        variant: "destructive",
+      });
+      return;
+    }
     
     if (!file) {
       toast({
@@ -87,9 +117,9 @@ export function UploadSection() {
       const { error: dbError } = await supabase
         .from('miniature_orders')
         .insert({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
           photo_url: urlData.publicUrl,
           photo_path: filePath,
         });
@@ -100,9 +130,9 @@ export function UploadSection() {
       try {
         await supabase.functions.invoke('send-order-notification', {
           body: {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            phone: formData.phone.trim(),
             photo_url: urlData.publicUrl
           }
         });
@@ -174,7 +204,9 @@ export function UploadSection() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="name" className="text-foreground font-medium">Nome Completo *</Label>
+                <Label htmlFor="name" className="text-foreground font-medium">
+                  Nome Completo *
+                </Label>
                 <Input
                   id="name"
                   name="name"
@@ -183,13 +215,16 @@ export function UploadSection() {
                   value={formData.name}
                   onChange={handleInputChange}
                   placeholder="Digite seu nome completo"
-                  className="h-12 text-base"
+                  className="h-12 text-base form-input"
                   autoComplete="name"
+                  aria-describedby="name-error"
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-foreground font-medium">E-mail *</Label>
+                <Label htmlFor="email" className="text-foreground font-medium">
+                  E-mail *
+                </Label>
                 <Input
                   id="email"
                   name="email"
@@ -198,14 +233,17 @@ export function UploadSection() {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Digite seu e-mail"
-                  className="h-12 text-base"
+                  className="h-12 text-base form-input"
                   autoComplete="email"
+                  aria-describedby="email-error"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone" className="text-foreground font-medium">Telefone *</Label>
+              <Label htmlFor="phone" className="text-foreground font-medium">
+                Telefone *
+              </Label>
               <Input
                 id="phone"
                 name="phone"
@@ -214,26 +252,39 @@ export function UploadSection() {
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="Digite seu telefone"
-                className="h-12 text-base"
+                className="h-12 text-base form-input"
                 autoComplete="tel"
+                aria-describedby="phone-error"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="photo" className="text-foreground font-medium">Sua Foto *</Label>
-              <div className="border-2 border-dashed border-muted rounded-lg p-8 text-center hover:border-primary transition-colors bg-background/30 cursor-pointer">
+              <Label htmlFor="photo" className="text-foreground font-medium">
+                Sua Foto *
+              </Label>
+              <div 
+                className="file-upload-area"
+                onClick={() => document.getElementById('photo')?.click()}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    document.getElementById('photo')?.click();
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-label="Selecionar foto"
+              >
                 <input
                   id="photo"
+                  name="photo"
                   type="file"
                   accept="image/*"
                   onChange={handleFileChange}
                   className="hidden"
                   required
+                  aria-describedby="photo-error"
                 />
-                <label
-                  htmlFor="photo"
-                  className="cursor-pointer flex flex-col items-center space-y-4 w-full h-full"
-                >
+                <div className="flex flex-col items-center space-y-4 w-full h-full">
                   <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center">
                     <Upload className="w-8 h-8 text-primary" />
                   </div>
@@ -251,7 +302,7 @@ export function UploadSection() {
                       </div>
                     </div>
                   )}
-                </label>
+                </div>
               </div>
             </div>
 
