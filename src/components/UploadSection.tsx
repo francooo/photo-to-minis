@@ -182,8 +182,9 @@ export function UploadSection() {
                   required
                   value={formData.name}
                   onChange={handleInputChange}
-                  placeholder="Seu nome completo"
-                  className="w-full"
+                  placeholder="Digite seu nome completo"
+                  className="h-12 text-base border-2 border-muted focus:border-primary focus:ring-0 bg-background/50"
+                  autoComplete="name"
                 />
               </div>
               
@@ -196,8 +197,9 @@ export function UploadSection() {
                   required
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="seu@email.com"
-                  className="w-full"
+                  placeholder="Digite seu e-mail"
+                  className="h-12 text-base border-2 border-muted focus:border-primary focus:ring-0 bg-background/50"
+                  autoComplete="email"
                 />
               </div>
             </div>
@@ -211,24 +213,26 @@ export function UploadSection() {
                 required
                 value={formData.phone}
                 onChange={handleInputChange}
-                placeholder="(11) 99999-9999"
-                className="w-full"
+                placeholder="Digite seu telefone"
+                className="h-12 text-base border-2 border-muted focus:border-primary focus:ring-0 bg-background/50"
+                autoComplete="tel"
               />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="photo" className="text-foreground font-medium">Sua Foto *</Label>
-              <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary transition-colors bg-muted/30">
+              <div className="border-2 border-dashed border-muted rounded-lg p-8 text-center hover:border-primary transition-colors bg-background/30 cursor-pointer">
                 <input
                   id="photo"
                   type="file"
                   accept="image/*"
                   onChange={handleFileChange}
                   className="hidden"
+                  required
                 />
                 <label
                   htmlFor="photo"
-                  className="cursor-pointer flex flex-col items-center space-y-4"
+                  className="cursor-pointer flex flex-col items-center space-y-4 w-full h-full"
                 >
                   <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center">
                     <Upload className="w-8 h-8 text-primary" />
@@ -264,7 +268,7 @@ export function UploadSection() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="btn-cta w-full text-lg py-6"
+              className="btn-cta w-full text-lg py-6 h-14"
             >
               {isSubmitting ? "Enviando..." : "Enviar Foto e Criar Minha Miniatura"}
             </Button>
