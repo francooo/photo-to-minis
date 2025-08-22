@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import gallery1 from "@/assets/gallery-1.jpg";
-import galleryAngels from "@/assets/gallery-angels.png";
+import galleryAngelsNew from "@/assets/gallery-angels-new.png";
 import galleryHulk from "@/assets/gallery-hulk.png";
 
 const galleryImages = [
@@ -13,9 +13,9 @@ const galleryImages = [
     description: "Coleção de miniaturas personalizadas com riqueza de detalhes",
   },
   {
-    src: galleryAngels,
-    title: "Anjos Esculpidos",
-    description: "Estátuas de anjos com detalhes impressionantes em 3D",
+    src: galleryAngelsNew,
+    title: "Esculturas Artísticas",
+    description: "Figuras detalhadas com acabamento profissional e arte refinada",
   },
   {
     src: galleryHulk,
