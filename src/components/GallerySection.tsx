@@ -2,13 +2,12 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import gallery1 from "@/assets/gallery-1.jpg";
 import galleryAngels from "@/assets/gallery-angels.png";
 import galleryHulk from "@/assets/gallery-hulk.png";
 
 const galleryImages = [
   {
-    src: gallery1,
+    src: galleryAngels,
     title: "Miniaturas Detalhadas",
     description: "Coleção de miniaturas personalizadas com riqueza de detalhes",
   },
