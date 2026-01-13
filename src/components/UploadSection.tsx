@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 
 export function UploadSection() {
   const [formData, setFormData] = useState({
@@ -19,7 +18,6 @@ export function UploadSection() {
   const { toast } = useToast();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Input change:', e.target.name, e.target.value);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -28,9 +26,7 @@ export function UploadSection() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
-    console.log('File selected:', selectedFile);
     if (selectedFile) {
-      // Validate file type
       if (!selectedFile.type.startsWith('image/')) {
         toast({
           title: "Arquivo inválido",
@@ -40,7 +36,6 @@ export function UploadSection() {
         return;
       }
       
-      // Validate file size (max 10MB)
       if (selectedFile.size > 10 * 1024 * 1024) {
         toast({
           title: "Arquivo muito grande",
@@ -57,7 +52,6 @@ export function UploadSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate required fields
     if (!formData.name.trim()) {
       toast({
         title: "Nome obrigatório",
@@ -97,49 +91,19 @@ export function UploadSection() {
     setIsSubmitting(true);
 
     try {
-      // Upload file to Supabase Storage
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
-      const filePath = `uploads/${fileName}`;
+      const formDataToSend = new FormData();
+      formDataToSend.append("name", formData.name.trim());
+      formDataToSend.append("email", formData.email.trim());
+      formDataToSend.append("phone", formData.phone.trim());
+      formDataToSend.append("photo", file);
 
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('miniature-photos')
-        .upload(filePath, file);
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        body: formDataToSend,
+      });
 
-      if (uploadError) throw uploadError;
-
-      // Get public URL
-      const { data: urlData } = supabase.storage
-        .from('miniature-photos')
-        .getPublicUrl(filePath);
-
-      // Save order to database
-      const { error: dbError } = await supabase
-        .from('miniature_orders')
-        .insert({
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          phone: formData.phone.trim(),
-          photo_url: urlData.publicUrl,
-          photo_path: filePath,
-        });
-
-      if (dbError) throw dbError;
-
-      // Send email notification
-      try {
-        await supabase.functions.invoke('send-order-notification', {
-          body: {
-            name: formData.name.trim(),
-            email: formData.email.trim(),
-            phone: formData.phone.trim(),
-            photo_url: urlData.publicUrl
-          }
-        });
-        console.log('Email notification sent successfully');
-      } catch (emailError) {
-        console.error('Error sending email notification:', emailError);
-        // Don't block the success flow if email fails
+      if (!response.ok) {
+        throw new Error("Failed to submit order");
       }
 
       setIsSuccess(true);
@@ -148,7 +112,6 @@ export function UploadSection() {
         description: "Entraremos em contato em breve para confirmar os detalhes",
       });
 
-      // Reset form
       setFormData({ name: "", email: "", phone: "" });
       setFile(null);
       
@@ -179,6 +142,7 @@ export function UploadSection() {
             <Button 
               onClick={() => setIsSuccess(false)}
               className="btn-hero"
+              data-testid="button-new-order"
             >
               Fazer Novo Pedido
             </Button>
@@ -217,7 +181,7 @@ export function UploadSection() {
                   placeholder="Digite seu nome completo"
                   className="h-12 text-base form-input"
                   autoComplete="name"
-                  aria-describedby="name-error"
+                  data-testid="input-name"
                 />
               </div>
               
@@ -235,7 +199,7 @@ export function UploadSection() {
                   placeholder="Digite seu e-mail"
                   className="h-12 text-base form-input"
                   autoComplete="email"
-                  aria-describedby="email-error"
+                  data-testid="input-email"
                 />
               </div>
             </div>
@@ -254,7 +218,7 @@ export function UploadSection() {
                 placeholder="Digite seu telefone"
                 className="h-12 text-base form-input"
                 autoComplete="tel"
-                aria-describedby="phone-error"
+                data-testid="input-phone"
               />
             </div>
 
@@ -273,6 +237,7 @@ export function UploadSection() {
                 tabIndex={0}
                 role="button"
                 aria-label="Selecionar foto"
+                data-testid="button-upload-photo"
               >
                 <input
                   id="photo"
@@ -282,15 +247,15 @@ export function UploadSection() {
                   onChange={handleFileChange}
                   className="hidden"
                   required
-                  aria-describedby="photo-error"
+                  data-testid="input-photo"
                 />
                 <div className="flex flex-col items-center space-y-4 w-full h-full">
                   <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center">
                     <Upload className="w-8 h-8 text-primary" />
                   </div>
                   {file ? (
-                    <div className="text-primary font-medium">
-                      ✓ {file.name}
+                    <div className="text-primary font-medium" data-testid="text-selected-file">
+                      {file.name}
                     </div>
                   ) : (
                     <div>
@@ -320,6 +285,7 @@ export function UploadSection() {
               type="submit"
               disabled={isSubmitting}
               className="btn-cta w-full text-lg py-6 h-14"
+              data-testid="button-submit"
             >
               {isSubmitting ? "Enviando..." : "Enviar Foto e Criar Minha Miniatura"}
             </Button>

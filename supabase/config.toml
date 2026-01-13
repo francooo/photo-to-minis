@@ -1,4 +1,0 @@
-project_id = "oeindtmtrqcvfmsgrzvp"
-
-[functions.send-order-notification]
-verify_jwt = false
