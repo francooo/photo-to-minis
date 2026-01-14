@@ -74,10 +74,11 @@ export async function registerRoutes(app: Express) {
       // Use a more robust way to get the public URL for the image
       const photoPath = `uploads/${req.file.filename}`;
       
-      // On Replit, we should use the REPL_EXTERNAL_URL if available, 
-      // or construct it from the host header.
+      // On Replit, we should prioritize the public development domain
       let baseUrl = "";
-      if (process.env.REPL_EXTERNAL_URL) {
+      if (process.env.REPLIT_DEV_DOMAIN) {
+        baseUrl = `https://${process.env.REPLIT_DEV_DOMAIN}`;
+      } else if (process.env.REPL_EXTERNAL_URL) {
         baseUrl = process.env.REPL_EXTERNAL_URL;
       } else {
         const protocol = req.headers["x-forwarded-proto"] || req.protocol;
