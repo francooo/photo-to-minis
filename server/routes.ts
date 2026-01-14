@@ -38,10 +38,23 @@ export async function registerRoutes(app: Express) {
         return res.status(400).json({ error: "Photo is required" });
       }
 
+      // Use a more robust way to get the public URL for the image
       const photoPath = `uploads/${req.file.filename}`;
-      const protocol = req.headers["x-forwarded-proto"] || req.protocol;
-      const host = req.headers["x-forwarded-host"] || req.get("host");
-      const photoUrl = `${protocol}://${host}/${photoPath}`;
+      
+      // On Replit, we should use the REPL_EXTERNAL_URL if available, 
+      // or construct it from the host header.
+      let baseUrl = "";
+      if (process.env.REPL_EXTERNAL_URL) {
+        baseUrl = process.env.REPL_EXTERNAL_URL;
+      } else {
+        const protocol = req.headers["x-forwarded-proto"] || req.protocol;
+        const host = req.headers["x-forwarded-host"] || req.get("host");
+        baseUrl = `${protocol}://${host}`;
+      }
+      
+      // Ensure there's no trailing slash to avoid double slashes
+      baseUrl = baseUrl.replace(/\/$/, "");
+      const photoUrl = `${baseUrl}/${photoPath}`;
 
       const orderData = {
         name: req.body.name,
@@ -77,8 +90,17 @@ export async function registerRoutes(app: Express) {
 
               <div style="background-color: #0f172a; padding: 25px; border-radius: 6px; border: 1px solid #1e293b; text-align: center;">
                 <h2 style="color: #94a3b8; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 15px 0; text-align: left;">Referência Visual</h2>
-                <img src="${photoUrl}" alt="Foto do Cliente" style="max-width: 100%; border-radius: 4px; border: 1px solid #334155; margin-bottom: 15px;" />
-                <p style="margin: 0;"><a href="${photoUrl}" style="color: #3b82f6; text-decoration: none; font-size: 14px;">Ver imagem em tamanho real →</a></p>
+                <div style="margin-bottom: 20px;">
+                  <img src="${photoUrl}" alt="Foto do Cliente" style="max-width: 100%; border-radius: 4px; border: 1px solid #334155;" />
+                </div>
+                
+                <div style="margin-top: 20px;">
+                  <a href="${photoUrl}" target="_blank" style="display: inline-block; background-color: #3b82f6; color: #ffffff; padding: 12px 24px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 14px; transition: background-color 0.2s;">
+                    Download da Imagem
+                  </a>
+                </div>
+                
+                <p style="margin-top: 15px;"><a href="${photoUrl}" style="color: #3b82f6; text-decoration: none; font-size: 12px;">Link direto da imagem</a></p>
               </div>
 
               <div style="margin-top: 30px; text-align: center; color: #64748b; font-size: 12px;">
