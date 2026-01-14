@@ -39,19 +39,29 @@ export async function registerRoutes(app: Express) {
       const order = orders.find(o => o.id === id);
 
       if (!order) {
+        console.error(`Order not found for download: ${id}`);
         return res.status(404).json({ error: "Order not found" });
       }
 
-      const filePath = path.join(process.cwd(), order.photoPath);
+      const filePath = path.resolve(process.cwd(), order.photoPath);
+      console.log(`Attempting download for file: ${filePath}`);
+
       if (!fs.existsSync(filePath)) {
-        return res.status(404).json({ error: "File not found" });
+        console.error(`File does not exist on disk: ${filePath}`);
+        return res.status(404).json({ error: "File not found on server" });
       }
 
       const ext = path.extname(order.photoPath);
-      res.download(filePath, `foto-cliente-${id}${ext}`);
+      const filename = `foto-cliente-${order.name.replace(/\s+/g, '-').toLowerCase()}${ext}`;
+
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.setHeader('Content-Type', 'application/octet-stream');
+      
+      const fileStream = fs.createReadStream(filePath);
+      fileStream.pipe(res);
     } catch (error) {
-      console.error("Error downloading file:", error);
-      res.status(500).json({ error: "Failed to download file" });
+      console.error("Error in download route:", error);
+      res.status(500).json({ error: "Internal server error during download" });
     }
   });
 
