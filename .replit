@@ -42,3 +42,8 @@ externalPort = 80
 [[ports]]
 localPort = 5001
 externalPort = 3000
+
+[userenv]
+
+[userenv.shared]
+RESEND_API_KEY = "re_YjRwv4Rf_9sJkQSBmq9ZexexQXfzbV5p5"
