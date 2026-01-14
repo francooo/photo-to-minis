@@ -32,6 +32,29 @@ const upload = multer({
 });
 
 export async function registerRoutes(app: Express) {
+  app.get("/api/orders/:id/download", async (req, res) => {
+    try {
+      const id = req.params.id;
+      const orders = await storage.getOrders();
+      const order = orders.find(o => o.id === id);
+
+      if (!order) {
+        return res.status(404).json({ error: "Order not found" });
+      }
+
+      const filePath = path.join(process.cwd(), order.photoPath);
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ error: "File not found" });
+      }
+
+      const ext = path.extname(order.photoPath);
+      res.download(filePath, `foto-cliente-${id}${ext}`);
+    } catch (error) {
+      console.error("Error downloading file:", error);
+      res.status(500).json({ error: "Failed to download file" });
+    }
+  });
+
   app.post("/api/orders", upload.single("photo"), async (req, res) => {
     try {
       if (!req.file) {
@@ -71,6 +94,8 @@ export async function registerRoutes(app: Express) {
 
       const order = await storage.createOrder(validation.data);
 
+      const downloadUrl = `${baseUrl}/api/orders/${order.id}/download`;
+
       // Send Email Notification via Resend
       try {
         await resend.emails.send({
@@ -91,11 +116,11 @@ export async function registerRoutes(app: Express) {
               <div style="background-color: #0f172a; padding: 25px; border-radius: 6px; border: 1px solid #1e293b; text-align: center;">
                 <h2 style="color: #94a3b8; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 15px 0; text-align: left;">Referência Visual</h2>
                 <div style="margin-bottom: 20px;">
-                  <img src="${photoUrl}" alt="Foto do Cliente" style="max-width: 100%; border-radius: 4px; border: 1px solid #334155;" />
+                  <img src="${photoUrl}" alt="Foto do Cliente" width="250" style="width: 250px; height: auto; border-radius: 8px; border: 1px solid #334155; display: block; margin: 0 auto;" />
                 </div>
                 
                 <div style="margin-top: 20px;">
-                  <a href="${photoUrl}" target="_blank" style="display: inline-block; background-color: #3b82f6; color: #ffffff; padding: 12px 24px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 14px; transition: background-color 0.2s;">
+                  <a href="${downloadUrl}" target="_blank" style="display: inline-block; background-color: #3b82f6; color: #ffffff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">
                     Download da Imagem
                   </a>
                 </div>

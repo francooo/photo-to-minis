@@ -1,0 +1,144 @@
+Contexto
+
+Atualmente, após o cliente realizar o preenchimento do formulário no sistema e fazer o upload de uma imagem, é enviado automaticamente um e-mail contendo os dados do cliente e uma seção de referência visual.
+
+Porém, existem dois problemas críticos no template de e-mail enviado:
+
+A imagem enviada pelo cliente não está sendo exibida corretamente no corpo do e-mail (aparece como imagem quebrada/desfocada).
+
+O botão “Download da Imagem” não realiza o download, apenas redireciona para a URL da imagem no navegador.
+
+O objetivo é corrigir esses comportamentos para que o e-mail funcione corretamente em clientes de e-mail como Gmail, Outlook e similares.
+
+❌ Problema 1 – Imagem não exibida no e-mail
+Situação atual
+
+O template tenta exibir a imagem enviada pelo cliente, porém:
+
+A imagem aparece quebrada ou desfocada.
+
+Em alguns clientes de e-mail, ela sequer é renderizada.
+
+Atualmente a imagem parece estar sendo referenciada via URL local, exemplo:
+
+https://localhost:5001/uploads/1768401056478_i79yhp.jpeg
+
+Causa provável
+
+Clientes de e-mail não conseguem acessar localhost.
+
+A imagem não está sendo servida via URL pública acessível externamente.
+
+Pode estar faltando:
+
+URL absoluta válida
+
+Headers corretos (Content-Type)
+
+Uso adequado da tag <img> para e-mails (HTML compatível)
+
+✅ Ajuste esperado – Exibição da imagem
+
+O agente deve:
+
+Garantir que a imagem enviada pelo cliente:
+
+Esteja armazenada em um local acessível publicamente (ex: CDN, bucket, endpoint público).
+
+Utilize uma URL absoluta válida (ex: https://seudominio.com/uploads/...).
+
+Ajustar o HTML do template de e-mail para:
+
+Exibir a imagem como miniatura (thumbnail) dentro do e-mail.
+
+Dimensões sugeridas:
+
+Largura máxima: 200px ou 250px
+
+Altura automática (height: auto)
+
+Exemplo esperado no template:
+
+<img 
+  src="{{urlPublicaDaImagem}}"
+  alt="Foto enviada pelo cliente"
+  style="max-width: 250px; border-radius: 8px; display: block;"
+/>
+
+
+Garantir compatibilidade com clientes de e-mail:
+
+Evitar CSS avançado
+
+Preferir estilos inline
+
+Não usar JavaScript
+
+❌ Problema 2 – Botão “Download da Imagem” não funciona
+Situação atual
+
+O botão “Download da Imagem” redireciona para:
+
+https://localhost:5001/uploads/1768401056478_i79yhp.jpeg
+
+
+O navegador apenas abre a imagem, não inicia o download.
+
+Em clientes de e-mail, o comportamento é inconsistente ou falha completamente.
+
+✅ Ajuste esperado – Download correto da imagem
+
+O agente deve implementar uma solução para que:
+
+Ao clicar no botão Download da Imagem:
+
+A mesma imagem enviada pelo cliente seja baixada.
+
+O arquivo mantenha seu nome original ou um nome padronizado (foto-cliente.jpeg).
+
+Soluções aceitáveis:
+
+Criar um endpoint de download, por exemplo:
+
+https://seudominio.com/downloads/imagem/{id}
+
+
+Esse endpoint deve:
+
+Retornar a imagem com headers corretos:
+
+Content-Disposition: attachment; filename="foto-cliente.jpeg"
+Content-Type: image/jpeg
+
+
+Ajustar o botão no template de e-mail para apontar para esse endpoint:
+
+<a 
+  href="{{urlDownloadImagem}}"
+  target="_blank"
+  style="
+    background-color: #3b82f6;
+    color: #ffffff;
+    padding: 12px 20px;
+    text-decoration: none;
+    border-radius: 6px;
+    display: inline-block;
+    font-weight: bold;
+  "
+>
+  Download da Imagem
+</a>
+
+📌 Requisitos finais
+
+A imagem exibida no e-mail e a imagem baixada devem ser exatamente a mesma que o cliente fez upload.
+
+O e-mail deve funcionar corretamente em:
+
+Gmail (web e mobile)
+
+Outlook
+
+Não utilizar URLs locais (localhost) no template final.
+
+Manter o layout visual atual, ajustando apenas o necessário para corrigir imagem e download.
