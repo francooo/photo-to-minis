@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 export function UploadSection() {
   const [formData, setFormData] = useState({
@@ -97,12 +98,11 @@ export function UploadSection() {
       formDataToSend.append("phone", formData.phone.trim());
       formDataToSend.append("photo", file);
 
-      const response = await fetch("/api/orders", {
-        method: "POST",
+      const { data, error } = await supabase.functions.invoke("create-order", {
         body: formDataToSend,
       });
 
-      if (!response.ok) {
+      if (error) {
         throw new Error("Failed to submit order");
       }
 
