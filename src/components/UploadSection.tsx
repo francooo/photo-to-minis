@@ -97,6 +97,7 @@ export function UploadSection() {
       formDataToSend.append("email", formData.email.trim());
       formDataToSend.append("phone", formData.phone.trim());
       formDataToSend.append("photo", file);
+      formDataToSend.append("source_page", "home");
 
       const { data, error } = await supabase.functions.invoke("create-order", {
         body: formDataToSend,

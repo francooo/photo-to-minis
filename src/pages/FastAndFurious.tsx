@@ -103,7 +103,7 @@ function CarCard({ car, index }: { car: typeof CARS[0]; index: number }) {
     }, []);
 
     const handleOrder = () => {
-        navigate(`/?modelo=${car.id}#upload`);
+        navigate(`/order?type=car&model=${car.id}`);
     };
 
     return (

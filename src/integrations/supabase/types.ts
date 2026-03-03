@@ -19,30 +19,45 @@ export type Database = {
           created_at: string
           email: string
           id: string
+          model_display_name: string | null
+          model_image_url: string | null
+          model_name: string | null
           name: string
+          order_type: string
           phone: string
-          photo_path: string
-          photo_url: string
+          photo_path: string | null
+          photo_url: string | null
+          source_page: string | null
           updated_at: string
         }
         Insert: {
           created_at?: string
           email: string
           id?: string
+          model_display_name?: string | null
+          model_image_url?: string | null
+          model_name?: string | null
           name: string
+          order_type?: string
           phone: string
-          photo_path: string
-          photo_url: string
+          photo_path?: string | null
+          photo_url?: string | null
+          source_page?: string | null
           updated_at?: string
         }
         Update: {
           created_at?: string
           email?: string
           id?: string
+          model_display_name?: string | null
+          model_image_url?: string | null
+          model_name?: string | null
           name?: string
+          order_type?: string
           phone?: string
-          photo_path?: string
-          photo_url?: string
+          photo_path?: string | null
+          photo_url?: string | null
+          source_page?: string | null
           updated_at?: string
         }
         Relationships: []
