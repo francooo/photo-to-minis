@@ -23,40 +23,48 @@ export function Header() {
         </div>
 
         {/* Desktop Menu */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center space-x-6">
           <button
             onClick={() => scrollToSection("inicio")}
-            className="text-foreground hover:text-primary transition-colors"
+            className="text-sm text-foreground hover:text-primary transition-colors"
           >
             Início
           </button>
           <button
             onClick={() => scrollToSection("como-funciona")}
-            className="text-foreground hover:text-primary transition-colors"
+            className="text-sm text-foreground hover:text-primary transition-colors"
           >
             Como Funciona
           </button>
           <button
             onClick={() => scrollToSection("galeria")}
-            className="text-foreground hover:text-primary transition-colors"
+            className="text-sm text-foreground hover:text-primary transition-colors"
           >
             Galeria
           </button>
           <button
             onClick={() => scrollToSection("depoimentos")}
-            className="text-foreground hover:text-primary transition-colors"
+            className="text-sm text-foreground hover:text-primary transition-colors"
           >
             Depoimentos
           </button>
+          <a
+            href="https://printpal.io/tools/3d-print-cost-calculator"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-foreground hover:text-primary transition-colors"
+          >
+            Calculadora de impressão
+          </a>
           <button
             onClick={() => scrollToSection("contato")}
-            className="text-foreground hover:text-primary transition-colors"
+            className="text-sm text-foreground hover:text-primary transition-colors"
           >
             Contato
           </button>
           <Link
             to="/fast-and-furious"
-            className="flex items-center gap-1.5 font-bold transition-all duration-300 px-3 py-1.5 rounded-full border"
+            className="flex items-center gap-1.5 text-sm font-bold transition-all duration-300 px-3 py-1.5 rounded-full border"
             style={{
               color: "#FF6B00",
               borderColor: "rgba(255,107,0,0.4)",
