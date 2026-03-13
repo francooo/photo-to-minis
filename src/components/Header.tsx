@@ -130,6 +130,15 @@ export function Header() {
             >
               Depoimentos
             </button>
+            <a
+              href="https://printpal.io/tools/3d-print-cost-calculator"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-left text-foreground hover:text-primary transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Calculadora de impressão
+            </a>
             <button
               onClick={() => scrollToSection("contato")}
               className="text-left text-foreground hover:text-primary transition-colors"
