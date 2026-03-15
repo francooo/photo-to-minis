@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { buildCarSVG, type Car } from "@/data/cars";
 import { buildSCsvg, type StockCar } from "@/data/stockcars";
+import { buildF1svg, teamLabel, type F1Car } from "@/data/f1cars";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
@@ -9,9 +10,10 @@ interface OrderModalProps {
   onClose: () => void;
   car?: Car | null;
   stockCar?: StockCar | null;
+  f1Car?: F1Car | null;
 }
 
-export function OrderModal({ isOpen, onClose, car, stockCar }: OrderModalProps) {
+export function OrderModal({ isOpen, onClose, car, stockCar, f1Car }: OrderModalProps) {
   const [showSuccess, setShowSuccess] = useState(false);
   const [sending, setSending] = useState(false);
   const [name, setName] = useState('');
@@ -51,15 +53,15 @@ export function OrderModal({ isOpen, onClose, car, stockCar }: OrderModalProps) 
     }
     setSending(true);
     try {
-      const modelDisplayName = car?.name || (stockCar ? `#${stockCar.num} — ${stockCar.name}` : '');
-      const modelSub = car ? `${car.filmLabel} · ${car.driverLabel}` : stockCar ? `${stockCar.driver} · ${stockCar.team} · Stock Car 2026` : '';
+      const modelDisplayName = car?.name || (stockCar ? `#${stockCar.num} — ${stockCar.name}` : f1Car ? `#${f1Car.num} — ${f1Car.name}` : '');
+      const modelSub = car ? `${car.filmLabel} · ${car.driverLabel}` : stockCar ? `${stockCar.driver} · ${stockCar.team} · Stock Car 2026` : f1Car ? `${f1Car.driver} · ${teamLabel(f1Car.team)} · F1 2026` : '';
 
       const formData = new FormData();
       formData.append("name", name.trim());
       formData.append("email", email.trim());
       formData.append("phone", phone.trim());
       formData.append("order_type", "car_miniature");
-      formData.append("model_name", car?.id || stockCar?.num?.toString() || "");
+      formData.append("model_name", car?.id || stockCar?.num?.toString() || f1Car?.id || "");
       formData.append("model_display_name", modelDisplayName);
       formData.append("source_page", "order_modal");
       // Extra fields for email
@@ -86,10 +88,10 @@ export function OrderModal({ isOpen, onClose, car, stockCar }: OrderModalProps) 
     }
   };
 
-  const carPreviewHtml = car ? buildCarSVG(car, car.id + '_modal') : stockCar ? buildSCsvg(stockCar) : '';
-  const previewBg = car?.bg || stockCar?.bg || '';
-  const previewName = car?.name || (stockCar ? `#${stockCar.num} — ${stockCar.name}` : '');
-  const previewSub = car ? `${car.filmLabel} · ${car.driverLabel}` : stockCar ? `${stockCar.driver} · ${stockCar.team} · Stock Car 2026` : '';
+  const carPreviewHtml = car ? buildCarSVG(car, car.id + '_modal') : stockCar ? buildSCsvg(stockCar) : f1Car ? buildF1svg(f1Car) : '';
+  const previewBg = car?.bg || stockCar?.bg || f1Car?.bg || '';
+  const previewName = car?.name || (stockCar ? `#${stockCar.num} — ${stockCar.name}` : f1Car ? `#${f1Car.num} — ${f1Car.name}` : '');
+  const previewSub = car ? `${car.filmLabel} · ${car.driverLabel}` : stockCar ? `${stockCar.driver} · ${stockCar.team} · Stock Car 2026` : f1Car ? `${f1Car.driver} · ${teamLabel(f1Car.team)} · F1 2026` : '';
 
   return (
     <div className="modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
@@ -105,7 +107,7 @@ export function OrderModal({ isOpen, onClose, car, stockCar }: OrderModalProps) 
         </div>
 
         {/* Car Preview */}
-        {(car || stockCar) && (
+        {(car || stockCar || f1Car) && (
           <div className="mx-8 mt-0 px-5 py-4 flex items-center gap-6 border-l-[3px] border-l-[hsl(var(--accent-orange))]" style={{ background: 'hsl(var(--surface2))', border: '1px solid hsl(var(--border-custom))', borderLeft: '3px solid hsl(var(--accent-orange))' }}>
             <div className="w-[120px] h-[60px] flex-shrink-0 overflow-hidden flex items-center justify-center" style={{ background: previewBg }} dangerouslySetInnerHTML={{ __html: carPreviewHtml }} />
             <div>
