@@ -18,11 +18,8 @@ export function PersonSection() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
         {/* Visual placeholder */}
         <div className="relative">
-          <div className="w-full aspect-[1/1.1] rounded-lg flex items-center justify-center" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(8,10,14,0.9) 70%)' }}>
-            <div className="text-center">
-              <div className="font-bebas text-[4rem] tracking-[3px]" style={{ color: 'hsl(var(--violet2))' }}>3D</div>
-              <div className="font-mono-tech text-[0.7rem] tracking-[3px]" style={{ color: 'rgba(139,92,246,0.5)' }}>PREVIEW INTERATIVO</div>
-            </div>
+          <div className="w-full aspect-[1/1.1] rounded-lg overflow-hidden">
+            <MiniatureFigure3D />
           </div>
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono-tech text-[0.6rem] tracking-[3px] uppercase whitespace-nowrap" style={{ color: 'rgba(139,92,246,0.5)' }}>Miniatura gerada via IA + impressão 3D</div>
         </div>
