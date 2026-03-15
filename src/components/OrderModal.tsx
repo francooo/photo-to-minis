@@ -53,8 +53,8 @@ export function OrderModal({ isOpen, onClose, car, stockCar, f1Car }: OrderModal
     }
     setSending(true);
     try {
-      const modelDisplayName = car?.name || (stockCar ? `#${stockCar.num} — ${stockCar.name}` : '');
-      const modelSub = car ? `${car.filmLabel} · ${car.driverLabel}` : stockCar ? `${stockCar.driver} · ${stockCar.team} · Stock Car 2026` : '';
+      const modelDisplayName = car?.name || (stockCar ? `#${stockCar.num} — ${stockCar.name}` : f1Car ? `#${f1Car.num} — ${f1Car.name}` : '');
+      const modelSub = car ? `${car.filmLabel} · ${car.driverLabel}` : stockCar ? `${stockCar.driver} · ${stockCar.team} · Stock Car 2026` : f1Car ? `${f1Car.driver} · ${teamLabel(f1Car.team)} · F1 2026` : '';
 
       const formData = new FormData();
       formData.append("name", name.trim());
