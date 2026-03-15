@@ -13,6 +13,7 @@ interface OrderModalProps {
 
 export function OrderModal({ isOpen, onClose, car, stockCar }: OrderModalProps) {
   const [showSuccess, setShowSuccess] = useState(false);
+  const [sending, setSending] = useState(false);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
