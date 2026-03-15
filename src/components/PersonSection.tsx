@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { MiniatureFigure3D } from "./MiniatureFigure3D";
 
 const steps = [
   { num: '01', title: 'Envie sua Foto', desc: 'Uma foto frontal nítida é suficiente. Para maior fidelidade, envie também de perfil.' },
