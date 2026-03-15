@@ -31,6 +31,17 @@ serve(async (req) => {
     const modelImageUrl = formData.get("model_image_url") as string | null;
     const sourcePage = (formData.get("source_page") as string) || "home";
 
+    // Extra order details
+    const scale = formData.get("scale") as string | null;
+    const qty = formData.get("qty") as string | null;
+    const urgency = formData.get("urgency") as string | null;
+    const base = formData.get("base") as string | null;
+    const cep = formData.get("cep") as string | null;
+    const city = formData.get("city") as string | null;
+    const address = formData.get("address") as string | null;
+    const obs = formData.get("obs") as string | null;
+    const modelSub = formData.get("model_sub") as string | null;
+
     if (!name || !email || !phone) {
       return new Response(
         JSON.stringify({ error: "Name, email and phone are required" }),
