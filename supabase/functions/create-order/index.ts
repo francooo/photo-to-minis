@@ -185,6 +185,9 @@ serve(async (req) => {
                 </div>
 
                 ${imageSection}
+                ${detailsSection}
+                ${deliverySection}
+                ${obsSection}
 
                 <div style="margin-top: 30px; text-align: center; color: #64748b; font-size: 12px;">
                   <p>Este é um e-mail automático gerado pelo sistema 3D Max.</p>
