@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { buildCarSVG, type Car } from "@/data/cars";
 import { buildSCsvg, type StockCar } from "@/data/stockcars";
+import { buildF1svg, teamLabel, type F1Car } from "@/data/f1cars";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
@@ -9,9 +10,10 @@ interface OrderModalProps {
   onClose: () => void;
   car?: Car | null;
   stockCar?: StockCar | null;
+  f1Car?: F1Car | null;
 }
 
-export function OrderModal({ isOpen, onClose, car, stockCar }: OrderModalProps) {
+export function OrderModal({ isOpen, onClose, car, stockCar, f1Car }: OrderModalProps) {
   const [showSuccess, setShowSuccess] = useState(false);
   const [sending, setSending] = useState(false);
   const [name, setName] = useState('');
