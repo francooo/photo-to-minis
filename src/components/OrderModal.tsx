@@ -61,7 +61,7 @@ export function OrderModal({ isOpen, onClose, car, stockCar, f1Car }: OrderModal
       formData.append("email", email.trim());
       formData.append("phone", phone.trim());
       formData.append("order_type", "car_miniature");
-      formData.append("model_name", car?.id || stockCar?.num?.toString() || "");
+      formData.append("model_name", car?.id || stockCar?.num?.toString() || f1Car?.id || "");
       formData.append("model_display_name", modelDisplayName);
       formData.append("source_page", "order_modal");
       // Extra fields for email
