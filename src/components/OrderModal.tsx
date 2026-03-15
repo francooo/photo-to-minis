@@ -44,12 +44,46 @@ export function OrderModal({ isOpen, onClose, car, stockCar }: OrderModalProps) 
 
   if (!isOpen) return null;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name || !phone || !email) {
       alert('Por favor, preencha nome, telefone e e-mail para continuar.');
       return;
     }
-    setShowSuccess(true);
+    setSending(true);
+    try {
+      const modelDisplayName = car?.name || (stockCar ? `#${stockCar.num} — ${stockCar.name}` : '');
+      const modelSub = car ? `${car.filmLabel} · ${car.driverLabel}` : stockCar ? `${stockCar.driver} · ${stockCar.team} · Stock Car 2026` : '';
+
+      const formData = new FormData();
+      formData.append("name", name.trim());
+      formData.append("email", email.trim());
+      formData.append("phone", phone.trim());
+      formData.append("order_type", "car_miniature");
+      formData.append("model_name", car?.id || stockCar?.num?.toString() || "");
+      formData.append("model_display_name", modelDisplayName);
+      formData.append("source_page", "order_modal");
+      // Extra fields for email
+      formData.append("scale", scale);
+      formData.append("qty", qty);
+      formData.append("urgency", urgency === 'normal' ? 'Normal — 7 a 14 dias' : urgency === 'express' ? 'Express — 3 a 5 dias' : 'Urgente — 24 a 48h');
+      formData.append("base", base === 'sem' ? 'Sem base' : base === 'simples' ? 'Base simples' : 'Base premium');
+      formData.append("cep", cep);
+      formData.append("city", city);
+      formData.append("address", address);
+      formData.append("obs", obs);
+      formData.append("model_sub", modelSub);
+
+      const { error } = await supabase.functions.invoke("create-order", { body: formData });
+      if (error) throw error;
+
+      setShowSuccess(true);
+      toast({ title: "Pedido enviado!", description: "E-mail de notificação disparado." });
+    } catch (err) {
+      console.error("Order error:", err);
+      toast({ title: "Erro ao enviar pedido", variant: "destructive" });
+    } finally {
+      setSending(false);
+    }
   };
 
   const carPreviewHtml = car ? buildCarSVG(car, car.id + '_modal') : stockCar ? buildSCsvg(stockCar) : '';
