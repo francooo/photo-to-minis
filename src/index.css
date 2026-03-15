@@ -2,84 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    /* 3D Max Theme - Futuristic Tech Colors */
-    --background: 240 10% 4%;
-    --foreground: 0 0% 98%;
+    --bg: 220 30% 4%;
+    --surface: 216 25% 6%;
+    --surface2: 218 22% 8%;
+    --surface3: 220 35% 5%;
+    --border-custom: 210 20% 16%;
+    --border2: 210 20% 22%;
 
-    --card: 240 8% 8%;
-    --card-foreground: 0 0% 98%;
+    --background: 220 30% 4%;
+    --foreground: 220 20% 94%;
 
-    --popover: 240 8% 8%;
-    --popover-foreground: 0 0% 98%;
+    --card: 216 25% 6%;
+    --card-foreground: 220 20% 94%;
 
-    /* Primary: Royal Blue */
-    --primary: 224 100% 58%;
+    --popover: 216 25% 6%;
+    --popover-foreground: 220 20% 94%;
+
+    /* Primary: Accent Orange */
+    --primary: 18 90% 48%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 224 100% 70%;
 
-    /* Secondary: Electric Purple */
-    --secondary: 280 100% 70%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary: Neon Cyan */
+    --secondary: 192 100% 50%;
+    --secondary-foreground: 220 30% 4%;
 
-    /* Accent: Vibrant Yellow */
-    --accent: 45 100% 60%;
-    --accent-foreground: 240 10% 4%;
+    /* Accent: Violet */
+    --accent: 263 70% 66%;
+    --accent-foreground: 0 0% 100%;
 
-    --muted: 240 8% 12%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 216 25% 10%;
+    --muted-foreground: 212 15% 55%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 240 8% 20%;
-    --input: 240 8% 12%;
-    --ring: 224 100% 58%;
+    --border: 210 20% 16%;
+    --input: 216 25% 10%;
+    --ring: 18 90% 48%;
 
-    /* Custom Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(224 100% 58%), hsl(280 100% 70%), hsl(45 100% 60%));
-    --gradient-card: linear-gradient(145deg, hsl(240 8% 8%), hsl(240 8% 12%));
-    --gradient-button: linear-gradient(135deg, hsl(224 100% 58%), hsl(280 100% 70%));
-    --gradient-accent: linear-gradient(90deg, hsl(45 100% 60%), hsl(50 100% 65%));
-
-    /* Shadows with glow effects */
-    --shadow-glow-primary: 0 0 30px hsl(224 100% 58% / 0.5);
-    --shadow-glow-secondary: 0 0 30px hsl(280 100% 70% / 0.5);
-    --shadow-glow-accent: 0 0 30px hsl(45 100% 60% / 0.5);
-    --shadow-card: 0 10px 30px -10px hsl(240 10% 2% / 0.8);
-
-    /* Animations */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Custom colors */
+    --accent-orange: 18 90% 48%;
+    --accent-orange2: 25 100% 63%;
+    --neon: 192 100% 50%;
+    --neon2: 192 100% 37%;
+    --neon3: 160 100% 50%;
+    --violet: 263 70% 66%;
+    --violet2: 263 80% 77%;
 
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  /* Light theme overrides (not used but keeping for compatibility) */
-  .light {
-    --background: 240 10% 4%;
-    --foreground: 0 0% 98%;
   }
 }
 
@@ -89,81 +70,525 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    background-image: radial-gradient(circle at 25% 25%, hsl(224 100% 58% / 0.1) 0%, transparent 70%),
-                      radial-gradient(circle at 75% 75%, hsl(280 100% 70% / 0.1) 0%, transparent 70%);
+    background: hsl(var(--bg));
+    color: hsl(var(--foreground));
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Noise overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9000;
+    opacity: 0.4;
   }
 
   /* Custom scrollbar */
   ::-webkit-scrollbar {
     @apply w-2;
   }
-  
+
   ::-webkit-scrollbar-track {
-    @apply bg-background;
+    background: hsl(var(--bg));
   }
-  
+
   ::-webkit-scrollbar-thumb {
-    background: var(--gradient-button);
+    background: linear-gradient(180deg, hsl(var(--accent-orange)), hsl(var(--neon)));
     @apply rounded-full;
   }
 }
 
 @layer components {
-  /* Hero button styles */
-  .btn-hero {
-    background: var(--gradient-button);
-    @apply text-white font-bold py-4 px-8 rounded-full shadow-lg;
-    box-shadow: var(--shadow-glow-primary);
-    transition: var(--transition-smooth);
-  }
-  
-  .btn-hero:hover {
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: var(--shadow-glow-primary), 0 15px 35px -10px hsl(224 100% 58% / 0.4);
-  }
-  
-  /* CTA button styles */
-  .btn-cta {
-    background: var(--gradient-accent);
-    @apply text-background font-bold py-4 px-8 rounded-full shadow-lg;
-    box-shadow: var(--shadow-glow-accent);
-    transition: var(--transition-bounce);
-  }
-  
-  .btn-cta:hover {
-    transform: translateY(-3px) scale(1.08);
-    box-shadow: var(--shadow-glow-accent), 0 20px 40px -10px hsl(45 100% 60% / 0.6);
+  /* Font classes */
+  .font-bebas {
+    font-family: 'Bebas Neue', sans-serif;
   }
 
-  /* Glow text effect */
-  .text-glow {
-    text-shadow: 0 0 20px currentColor;
+  .font-mono-tech {
+    font-family: 'Share Tech Mono', monospace;
   }
 
-  /* Card with gradient border */
-  .card-glow {
-    background: var(--gradient-card);
-    @apply rounded-xl p-6;
-    box-shadow: var(--shadow-card);
+  .font-barlow {
+    font-family: 'Barlow', sans-serif;
+  }
+
+  /* Section label */
+  .section-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 4px;
+    color: hsl(var(--accent-orange));
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .section-label-neon {
+    color: hsl(var(--neon));
+  }
+
+  .section-label-violet {
+    color: hsl(var(--violet2));
+  }
+
+  /* Section title */
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.6rem);
+    letter-spacing: 2px;
+    color: hsl(0 0% 100%);
+    line-height: 0.95;
+    margin-bottom: 1rem;
+  }
+
+  /* Section desc */
+  .section-desc {
+    font-size: 1rem;
+    color: hsl(var(--muted-foreground));
+    line-height: 1.8;
+    max-width: 520px;
+  }
+
+  /* Dividers */
+  .divider-accent {
+    height: 1px;
+    width: 60px;
+    margin: 1.4rem 0;
+    background: linear-gradient(90deg, hsl(var(--accent-orange)), transparent);
+  }
+
+  .divider-neon {
+    height: 1px;
+    width: 60px;
+    margin: 1.4rem 0;
+    background: linear-gradient(90deg, hsl(var(--neon)), transparent);
+  }
+
+  .divider-violet {
+    height: 1px;
+    width: 60px;
+    margin: 1.4rem 0;
+    background: linear-gradient(90deg, hsl(var(--violet)), transparent);
+  }
+
+  /* Buttons */
+  .btn-primary-site {
+    background: hsl(var(--accent-orange));
+    color: hsl(0 0% 100%);
+    padding: 0.85rem 2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 3px;
+    text-decoration: none;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.25s;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary-site:hover {
+    background: hsl(var(--accent-orange2));
+    box-shadow: 0 0 30px hsla(var(--accent-orange), 0.5);
+    transform: translateY(-2px);
+  }
+
+  .btn-neon-site {
+    background: hsl(var(--neon));
+    color: hsl(var(--bg));
+    padding: 0.85rem 2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 3px;
+    text-decoration: none;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.25s;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-neon-site:hover {
+    box-shadow: 0 0 30px hsla(var(--neon), 0.5);
+    transform: translateY(-2px);
+  }
+
+  .btn-violet-site {
+    background: hsl(var(--violet));
+    color: hsl(0 0% 100%);
+    padding: 0.85rem 2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 3px;
+    text-decoration: none;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.25s;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-violet-site:hover {
+    background: hsl(var(--violet2));
+    box-shadow: 0 0 30px hsla(var(--violet), 0.5);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline-site {
+    border: 1px solid hsl(var(--border-custom));
+    color: hsl(var(--muted-foreground));
+    padding: 0.85rem 2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 3px;
+    text-decoration: none;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.25s;
+    display: inline-block;
+    cursor: pointer;
+    background: transparent;
+  }
+
+  .btn-outline-site:hover {
+    border-color: hsl(var(--neon));
+    color: hsl(var(--neon));
+    box-shadow: 0 0 40px hsla(var(--neon), 0.12);
+  }
+
+  /* Nav CTA */
+  .nav-cta {
+    background: hsl(var(--accent-orange));
+    color: hsl(0 0% 100%);
+    padding: 0.45rem 1.3rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-decoration: none;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .nav-cta:hover {
+    background: hsl(var(--accent-orange2));
+    box-shadow: 0 0 20px hsla(var(--accent-orange), 0.5);
+  }
+
+  .nav-cta-ghost {
+    background: transparent;
+    color: hsl(var(--neon));
+    border: 1px solid hsla(var(--neon), 0.3);
+    padding: 0.45rem 1.3rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-decoration: none;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .nav-cta-ghost:hover {
+    border-color: hsl(var(--neon));
+    box-shadow: 0 0 40px hsla(var(--neon), 0.12);
+  }
+
+  /* Filter buttons */
+  .filter-btn {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.63rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border: 1px solid hsl(var(--border-custom));
+    background: transparent;
+    color: hsl(var(--muted-foreground));
+    cursor: pointer;
+    transition: all 0.2s;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  }
+
+  .filter-btn.active,
+  .filter-btn:hover {
+    border-color: hsl(var(--accent-orange));
+    color: hsl(var(--accent-orange));
+    background: hsla(var(--accent-orange), 0.07);
+  }
+
+  /* Car card */
+  .car-card {
+    background: hsl(var(--surface));
+    border: 1px solid hsl(var(--border-custom));
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
     position: relative;
   }
-  
-  .card-glow::before {
+
+  .car-card::after {
     content: '';
     position: absolute;
     inset: 0;
-    padding: 2px;
-    background: var(--gradient-button);
-    border-radius: inherit;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: subtract;
-    -webkit-mask-composite: source-out;
+    border: 1px solid hsl(var(--accent-orange));
+    opacity: 0;
+    transition: opacity 0.3s;
     pointer-events: none;
-    z-index: -1;
   }
 
-  /* Form styles */
+  .car-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 50px hsla(var(--accent-orange), 0.1);
+  }
+
+  .car-card:hover::after {
+    opacity: 1;
+  }
+
+  /* Car card button */
+  .car-card-btn {
+    display: block;
+    width: 100%;
+    margin-top: 0.8rem;
+    padding: 0.5rem;
+    background: transparent;
+    border: 1px solid hsl(var(--border-custom));
+    color: hsl(var(--muted-foreground));
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.63rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .car-card-btn:hover {
+    border-color: hsl(var(--accent-orange));
+    color: hsl(var(--accent-orange));
+    background: hsla(var(--accent-orange), 0.06);
+  }
+
+  /* SC Card styles */
+  .sc-card {
+    background: hsl(var(--bg));
+    border: 1px solid hsl(var(--border-custom));
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .sc-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s;
+  }
+
+  .sc-card-chevrolet::before { background: linear-gradient(90deg, #e8c000, #ffdd00); }
+  .sc-card-toyota::before { background: linear-gradient(90deg, #cc0000, #ff2200); }
+  .sc-card-mitsubishi::before { background: linear-gradient(90deg, #cc0000, #ffffff); }
+
+  .sc-card:hover { transform: translateY(-4px); }
+  .sc-card-chevrolet:hover { box-shadow: 0 0 40px rgba(255,215,0,0.15); }
+  .sc-card-toyota:hover { box-shadow: 0 0 40px rgba(220,0,0,0.15); }
+  .sc-card-mitsubishi:hover { box-shadow: 0 0 40px rgba(200,0,0,0.12); }
+  .sc-card:hover::before { transform: scaleX(1); }
+
+  .sc-card-btn {
+    display: block;
+    width: 100%;
+    margin-top: 0.8rem;
+    padding: 0.5rem;
+    background: transparent;
+    border: 1px solid hsl(var(--border-custom));
+    color: hsl(var(--muted-foreground));
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.63rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .sc-card-chevrolet .sc-card-btn:hover { border-color: #ffd700; color: #ffd700; background: rgba(255,215,0,0.06); }
+  .sc-card-toyota .sc-card-btn:hover { border-color: #ff4444; color: #ff4444; background: rgba(255,50,50,0.06); }
+  .sc-card-mitsubishi .sc-card-btn:hover { border-color: #ff8888; color: #ff8888; background: rgba(255,80,80,0.05); }
+
+  /* Upload zone */
+  .upload-zone {
+    border: 2px dashed hsl(var(--border-custom));
+    padding: 3.5rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    background: hsl(var(--surface));
+    overflow: hidden;
+  }
+
+  .upload-zone::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, hsla(var(--neon), 0.04), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .upload-zone:hover {
+    border-color: hsl(var(--neon));
+    box-shadow: 0 0 40px hsla(var(--neon), 0.12);
+  }
+
+  .upload-zone:hover::before {
+    opacity: 1;
+  }
+
+  /* How it works */
+  .how-item {
+    background: hsl(var(--bg));
+    padding: 2.5rem 1.8rem;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .how-item:hover {
+    background: hsl(var(--surface));
+  }
+
+  /* Modal styles */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(4, 6, 10, 0.88);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .modal-container {
+    background: hsl(var(--surface));
+    border: 1px solid hsl(var(--border-custom));
+    width: 100%;
+    max-width: 780px;
+    max-height: 92vh;
+    overflow-y: auto;
+    position: relative;
+    animation: modalIn 0.35s cubic-bezier(.16,1,.3,1);
+  }
+
+  .modal-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, hsl(var(--accent-orange)), hsl(var(--neon)));
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.75); }
+  }
+
+  /* Calc styles */
+  .calc-input,
+  .calc-select {
+    width: 100%;
+    background: hsl(var(--bg));
+    border: 1px solid hsl(var(--border-custom));
+    color: hsl(var(--foreground));
+    padding: 0.7rem 0.9rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.82rem;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+
+  .calc-input:focus,
+  .calc-select:focus {
+    border-color: hsl(var(--neon));
+    box-shadow: 0 0 0 1px hsla(var(--neon), 0.08);
+  }
+
+  .seg-btn {
+    flex: 1;
+    padding: 0.6rem 0.5rem;
+    background: hsl(var(--bg));
+    border: none;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    color: hsl(var(--muted-foreground));
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .seg-btn.active {
+    background: hsla(var(--neon), 0.1);
+    color: hsl(var(--neon));
+  }
+
+  /* Modal input styles */
+  .modal-input,
+  .modal-select,
+  .modal-textarea {
+    width: 100%;
+    background: hsl(var(--bg));
+    border: 1px solid hsl(var(--border-custom));
+    color: hsl(var(--foreground));
+    padding: 0.7rem 0.9rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.82rem;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+
+  .modal-input:focus,
+  .modal-select:focus,
+  .modal-textarea:focus {
+    border-color: hsl(var(--neon));
+    box-shadow: 0 0 0 1px hsla(var(--neon), 0.08);
+  }
+
+  .modal-textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+  }
+
+  /* Form styles (keep backward compat) */
   .form-input {
     @apply bg-background border-input text-foreground;
     transition: all 0.2s ease;
@@ -174,11 +599,6 @@ All colors MUST be HSL.
     outline: none;
   }
 
-  .form-input:hover {
-    @apply border-primary/50;
-  }
-
-  /* File upload area */
   .file-upload-area {
     @apply border-2 border-dashed border-muted rounded-lg p-8 text-center transition-all duration-200;
     cursor: pointer;
@@ -187,9 +607,5 @@ All colors MUST be HSL.
 
   .file-upload-area:hover {
     @apply border-primary bg-primary/5;
-  }
-
-  .file-upload-area:focus-within {
-    @apply border-primary ring-2 ring-primary/20;
   }
 }
