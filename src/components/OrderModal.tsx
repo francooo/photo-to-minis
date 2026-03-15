@@ -88,10 +88,10 @@ export function OrderModal({ isOpen, onClose, car, stockCar, f1Car }: OrderModal
     }
   };
 
-  const carPreviewHtml = car ? buildCarSVG(car, car.id + '_modal') : stockCar ? buildSCsvg(stockCar) : '';
-  const previewBg = car?.bg || stockCar?.bg || '';
-  const previewName = car?.name || (stockCar ? `#${stockCar.num} — ${stockCar.name}` : '');
-  const previewSub = car ? `${car.filmLabel} · ${car.driverLabel}` : stockCar ? `${stockCar.driver} · ${stockCar.team} · Stock Car 2026` : '';
+  const carPreviewHtml = car ? buildCarSVG(car, car.id + '_modal') : stockCar ? buildSCsvg(stockCar) : f1Car ? buildF1svg(f1Car) : '';
+  const previewBg = car?.bg || stockCar?.bg || f1Car?.bg || '';
+  const previewName = car?.name || (stockCar ? `#${stockCar.num} — ${stockCar.name}` : f1Car ? `#${f1Car.num} — ${f1Car.name}` : '');
+  const previewSub = car ? `${car.filmLabel} · ${car.driverLabel}` : stockCar ? `${stockCar.driver} · ${stockCar.team} · Stock Car 2026` : f1Car ? `${f1Car.driver} · ${teamLabel(f1Car.team)} · F1 2026` : '';
 
   return (
     <div className="modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
