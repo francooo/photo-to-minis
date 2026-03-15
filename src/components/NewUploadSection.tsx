@@ -124,7 +124,7 @@ export function NewUploadSection() {
             </div>
           ) : (
             /* Step 2: File selected — show preview + form fields */
-            <div className="upload-zone">
+            <div className="upload-zone cursor-default">
               <div className="mb-4">
                 <img src={previewUrl!} alt="Preview" className="max-w-[200px] max-h-[150px] mx-auto rounded border border-[hsl(var(--border-custom))] object-cover" />
               </div>
