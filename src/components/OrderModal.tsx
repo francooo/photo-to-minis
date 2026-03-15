@@ -198,7 +198,7 @@ export function OrderModal({ isOpen, onClose, car, stockCar }: OrderModalProps) 
             {/* Footer */}
             <div className="px-8 py-5 border-t border-[hsl(var(--border-custom))] flex flex-wrap gap-4 items-center">
               <button onClick={onClose} className="px-6 py-3.5 bg-transparent border border-[hsl(var(--border-custom))] text-[hsl(var(--muted-foreground))] font-mono-tech text-[0.68rem] tracking-[2px] uppercase cursor-pointer transition-all hover:border-[hsl(var(--muted-foreground))] hover:text-white" style={{ clipPath: 'polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)' }}>Cancelar</button>
-              <button onClick={handleSubmit} className="flex-1 min-w-[200px] px-4 py-3.5 font-bebas text-[1.1rem] tracking-[3px] text-white border-none cursor-pointer transition-all hover:shadow-[0_0_25px_rgba(232,80,10,0.4)]" style={{ background: 'hsl(var(--accent-orange))', clipPath: 'polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)' }}>Enviar Pedido →</button>
+              <button onClick={handleSubmit} disabled={sending} className="flex-1 min-w-[200px] px-4 py-3.5 font-bebas text-[1.1rem] tracking-[3px] text-white border-none cursor-pointer transition-all hover:shadow-[0_0_25px_rgba(232,80,10,0.4)] disabled:opacity-50 disabled:cursor-not-allowed" style={{ background: 'hsl(var(--accent-orange))', clipPath: 'polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)' }}>{sending ? 'Enviando...' : 'Enviar Pedido →'}</button>
               <div className="w-full font-mono-tech text-[0.58rem] tracking-[1px] text-center opacity-50" style={{ color: 'hsl(var(--muted-foreground))' }}>* Após envio entraremos em contato via WhatsApp/e-mail para confirmar o orçamento.</div>
             </div>
           </>
