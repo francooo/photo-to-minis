@@ -31,6 +31,17 @@ serve(async (req) => {
     const modelImageUrl = formData.get("model_image_url") as string | null;
     const sourcePage = (formData.get("source_page") as string) || "home";
 
+    // Extra order details
+    const scale = formData.get("scale") as string | null;
+    const qty = formData.get("qty") as string | null;
+    const urgency = formData.get("urgency") as string | null;
+    const base = formData.get("base") as string | null;
+    const cep = formData.get("cep") as string | null;
+    const city = formData.get("city") as string | null;
+    const address = formData.get("address") as string | null;
+    const obs = formData.get("obs") as string | null;
+    const modelSub = formData.get("model_sub") as string | null;
+
     if (!name || !email || !phone) {
       return new Response(
         JSON.stringify({ error: "Name, email and phone are required" }),
@@ -111,13 +122,39 @@ serve(async (req) => {
           ? `Novo Pedido de Miniatura - ${modelDisplayName} (Velozes e Furiosos)`
           : `Novo Pedido de Miniatura 3D - ${name}`;
 
+        const detailsSection = isCarOrder && (scale || qty || urgency || base)
+          ? `<div style="background-color: #0f172a; padding: 25px; border-radius: 6px; border: 1px solid #1e293b; margin-bottom: 25px;">
+              <h2 style="color: #94a3b8; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 15px 0;">Detalhes da Miniatura</h2>
+              ${scale ? `<p style="margin: 5px 0; color: #e2e8f0;"><strong>Escala:</strong> ${scale}</p>` : ''}
+              ${qty ? `<p style="margin: 5px 0; color: #e2e8f0;"><strong>Quantidade:</strong> ${qty}</p>` : ''}
+              ${urgency ? `<p style="margin: 5px 0; color: #e2e8f0;"><strong>Urgência:</strong> ${urgency}</p>` : ''}
+              ${base ? `<p style="margin: 5px 0; color: #e2e8f0;"><strong>Base:</strong> ${base}</p>` : ''}
+            </div>`
+          : '';
+
+        const deliverySection = isCarOrder && (cep || city || address)
+          ? `<div style="background-color: #0f172a; padding: 25px; border-radius: 6px; border: 1px solid #1e293b; margin-bottom: 25px;">
+              <h2 style="color: #94a3b8; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 15px 0;">Entrega</h2>
+              ${cep ? `<p style="margin: 5px 0; color: #e2e8f0;"><strong>CEP:</strong> ${cep}</p>` : ''}
+              ${city ? `<p style="margin: 5px 0; color: #e2e8f0;"><strong>Cidade:</strong> ${city}</p>` : ''}
+              ${address ? `<p style="margin: 5px 0; color: #e2e8f0;"><strong>Endereço:</strong> ${address}</p>` : ''}
+            </div>`
+          : '';
+
+        const obsSection = obs
+          ? `<div style="background-color: #0f172a; padding: 25px; border-radius: 6px; border: 1px solid #1e293b; margin-bottom: 25px;">
+              <h2 style="color: #94a3b8; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 15px 0;">Observações</h2>
+              <p style="margin: 5px 0; color: #e2e8f0;">${obs}</p>
+            </div>`
+          : '';
+
         const imageSection = isCarOrder
-          ? `<div style="background-color: #0f172a; padding: 25px; border-radius: 6px; border: 1px solid #1e293b; text-align: center;">
+          ? `<div style="background-color: #0f172a; padding: 25px; border-radius: 6px; border: 1px solid #1e293b; text-align: center; margin-bottom: 25px;">
               <h2 style="color: #94a3b8; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 15px 0; text-align: left;">Modelo Selecionado</h2>
               <p style="color: #fff; font-size: 18px; font-weight: bold; margin: 0 0 5px 0;">${modelDisplayName}</p>
-              <p style="color: #94a3b8; margin: 0 0 15px 0;">Coleção Velozes e Furiosos</p>
+              ${modelSub ? `<p style="color: #94a3b8; margin: 0;">${modelSub}</p>` : ''}
             </div>`
-          : `<div style="background-color: #0f172a; padding: 25px; border-radius: 6px; border: 1px solid #1e293b; text-align: center;">
+          : `<div style="background-color: #0f172a; padding: 25px; border-radius: 6px; border: 1px solid #1e293b; text-align: center; margin-bottom: 25px;">
               <h2 style="color: #94a3b8; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 15px 0; text-align: left;">Referência Visual</h2>
               <div style="margin-bottom: 20px;">
                 <img src="${photoUrl}" alt="Foto do Cliente" width="250" style="width: 250px; height: auto; border-radius: 8px; border: 1px solid #334155; display: block; margin: 0 auto;" />
@@ -148,6 +185,9 @@ serve(async (req) => {
                 </div>
 
                 ${imageSection}
+                ${detailsSection}
+                ${deliverySection}
+                ${obsSection}
 
                 <div style="margin-top: 30px; text-align: center; color: #64748b; font-size: 12px;">
                   <p>Este é um e-mail automático gerado pelo sistema 3D Max.</p>

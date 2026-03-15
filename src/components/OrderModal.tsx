@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { buildCarSVG, type Car } from "@/data/cars";
 import { buildSCsvg, type StockCar } from "@/data/stockcars";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 interface OrderModalProps {
   isOpen: boolean;
@@ -11,6 +13,7 @@ interface OrderModalProps {
 
 export function OrderModal({ isOpen, onClose, car, stockCar }: OrderModalProps) {
   const [showSuccess, setShowSuccess] = useState(false);
+  const [sending, setSending] = useState(false);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -41,12 +44,46 @@ export function OrderModal({ isOpen, onClose, car, stockCar }: OrderModalProps) 
 
   if (!isOpen) return null;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name || !phone || !email) {
       alert('Por favor, preencha nome, telefone e e-mail para continuar.');
       return;
     }
-    setShowSuccess(true);
+    setSending(true);
+    try {
+      const modelDisplayName = car?.name || (stockCar ? `#${stockCar.num} — ${stockCar.name}` : '');
+      const modelSub = car ? `${car.filmLabel} · ${car.driverLabel}` : stockCar ? `${stockCar.driver} · ${stockCar.team} · Stock Car 2026` : '';
+
+      const formData = new FormData();
+      formData.append("name", name.trim());
+      formData.append("email", email.trim());
+      formData.append("phone", phone.trim());
+      formData.append("order_type", "car_miniature");
+      formData.append("model_name", car?.id || stockCar?.num?.toString() || "");
+      formData.append("model_display_name", modelDisplayName);
+      formData.append("source_page", "order_modal");
+      // Extra fields for email
+      formData.append("scale", scale);
+      formData.append("qty", qty);
+      formData.append("urgency", urgency === 'normal' ? 'Normal — 7 a 14 dias' : urgency === 'express' ? 'Express — 3 a 5 dias' : 'Urgente — 24 a 48h');
+      formData.append("base", base === 'sem' ? 'Sem base' : base === 'simples' ? 'Base simples' : 'Base premium');
+      formData.append("cep", cep);
+      formData.append("city", city);
+      formData.append("address", address);
+      formData.append("obs", obs);
+      formData.append("model_sub", modelSub);
+
+      const { error } = await supabase.functions.invoke("create-order", { body: formData });
+      if (error) throw error;
+
+      setShowSuccess(true);
+      toast({ title: "Pedido enviado!", description: "E-mail de notificação disparado." });
+    } catch (err) {
+      console.error("Order error:", err);
+      toast({ title: "Erro ao enviar pedido", variant: "destructive" });
+    } finally {
+      setSending(false);
+    }
   };
 
   const carPreviewHtml = car ? buildCarSVG(car, car.id + '_modal') : stockCar ? buildSCsvg(stockCar) : '';
@@ -161,7 +198,7 @@ export function OrderModal({ isOpen, onClose, car, stockCar }: OrderModalProps) 
             {/* Footer */}
             <div className="px-8 py-5 border-t border-[hsl(var(--border-custom))] flex flex-wrap gap-4 items-center">
               <button onClick={onClose} className="px-6 py-3.5 bg-transparent border border-[hsl(var(--border-custom))] text-[hsl(var(--muted-foreground))] font-mono-tech text-[0.68rem] tracking-[2px] uppercase cursor-pointer transition-all hover:border-[hsl(var(--muted-foreground))] hover:text-white" style={{ clipPath: 'polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)' }}>Cancelar</button>
-              <button onClick={handleSubmit} className="flex-1 min-w-[200px] px-4 py-3.5 font-bebas text-[1.1rem] tracking-[3px] text-white border-none cursor-pointer transition-all hover:shadow-[0_0_25px_rgba(232,80,10,0.4)]" style={{ background: 'hsl(var(--accent-orange))', clipPath: 'polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)' }}>Enviar Pedido →</button>
+              <button onClick={handleSubmit} disabled={sending} className="flex-1 min-w-[200px] px-4 py-3.5 font-bebas text-[1.1rem] tracking-[3px] text-white border-none cursor-pointer transition-all hover:shadow-[0_0_25px_rgba(232,80,10,0.4)] disabled:opacity-50 disabled:cursor-not-allowed" style={{ background: 'hsl(var(--accent-orange))', clipPath: 'polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)' }}>{sending ? 'Enviando...' : 'Enviar Pedido →'}</button>
               <div className="w-full font-mono-tech text-[0.58rem] tracking-[1px] text-center opacity-50" style={{ color: 'hsl(var(--muted-foreground))' }}>* Após envio entraremos em contato via WhatsApp/e-mail para confirmar o orçamento.</div>
             </div>
           </>
