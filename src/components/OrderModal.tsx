@@ -107,7 +107,7 @@ export function OrderModal({ isOpen, onClose, car, stockCar, f1Car }: OrderModal
         </div>
 
         {/* Car Preview */}
-        {(car || stockCar) && (
+        {(car || stockCar || f1Car) && (
           <div className="mx-8 mt-0 px-5 py-4 flex items-center gap-6 border-l-[3px] border-l-[hsl(var(--accent-orange))]" style={{ background: 'hsl(var(--surface2))', border: '1px solid hsl(var(--border-custom))', borderLeft: '3px solid hsl(var(--accent-orange))' }}>
             <div className="w-[120px] h-[60px] flex-shrink-0 overflow-hidden flex items-center justify-center" style={{ background: previewBg }} dangerouslySetInnerHTML={{ __html: carPreviewHtml }} />
             <div>
