@@ -26,6 +26,7 @@ export function Navigation() {
         <li><button onClick={() => scrollToSection("carros")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Catálogo V&F</button></li>
         <li><button onClick={() => scrollToSection("miniaturas")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Miniatura Pessoal</button></li>
         <li><button onClick={() => scrollToSection("stockcar")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Stock Car 2026</button></li>
+        <li><button onClick={() => scrollToSection("f1")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Fórmula 1</button></li>
         <li><button onClick={() => scrollToSection("processo")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Como Funciona</button></li>
       </ul>
 
@@ -47,6 +48,7 @@ export function Navigation() {
           <button onClick={() => scrollToSection("carros")} className="font-mono-tech text-[0.75rem] tracking-[2px] uppercase text-left text-[hsl(var(--muted-foreground))] bg-transparent border-none cursor-pointer">Catálogo V&F</button>
           <button onClick={() => scrollToSection("miniaturas")} className="font-mono-tech text-[0.75rem] tracking-[2px] uppercase text-left text-[hsl(var(--muted-foreground))] bg-transparent border-none cursor-pointer">Miniatura Pessoal</button>
           <button onClick={() => scrollToSection("stockcar")} className="font-mono-tech text-[0.75rem] tracking-[2px] uppercase text-left text-[hsl(var(--muted-foreground))] bg-transparent border-none cursor-pointer">Stock Car 2026</button>
+          <button onClick={() => scrollToSection("f1")} className="font-mono-tech text-[0.75rem] tracking-[2px] uppercase text-left text-[hsl(var(--muted-foreground))] bg-transparent border-none cursor-pointer">Fórmula 1</button>
           <button onClick={() => scrollToSection("processo")} className="font-mono-tech text-[0.75rem] tracking-[2px] uppercase text-left text-[hsl(var(--muted-foreground))] bg-transparent border-none cursor-pointer">Como Funciona</button>
           <Link to="/calculadora" onClick={() => setIsMenuOpen(false)} className="nav-cta-ghost text-center">Calculadora</Link>
           <button onClick={() => scrollToSection("upload")} className="nav-cta text-center">Criar Minha Mini</button>
