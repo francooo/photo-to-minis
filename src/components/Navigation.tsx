@@ -26,6 +26,7 @@ export function Navigation() {
         <li><button onClick={() => scrollToSection("carros")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Catálogo V&F</button></li>
         <li><button onClick={() => scrollToSection("miniaturas")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Miniatura Pessoal</button></li>
         <li><button onClick={() => scrollToSection("stockcar")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Stock Car 2026</button></li>
+        <li><button onClick={() => scrollToSection("f1")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Fórmula 1</button></li>
         <li><button onClick={() => scrollToSection("processo")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Como Funciona</button></li>
       </ul>
 
