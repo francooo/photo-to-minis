@@ -9,7 +9,7 @@ export function NewFooter() {
             SUA<span className="text-[hsl(var(--accent-orange))]">MINIATURA</span><em className="text-[hsl(var(--neon))] not-italic">3D</em>
           </div>
           <p className="text-[0.875rem] text-[hsl(var(--muted-foreground))] leading-[1.7] max-w-[280px] mb-5">
-            Transformamos fotos em miniaturas 3D. Especialistas em miniaturas pessoais e veículos da franquia Velozes & Furiosos.
+            Transformamos fotos em miniaturas 3D personalizadas. Presentes únicos, lembranças e peças colecionáveis com impressão de alta precisão.
           </p>
           <div className="flex gap-3">
             {['IG', 'YT', 'WA', 'TK'].map(s => (
