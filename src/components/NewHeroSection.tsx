@@ -152,20 +152,20 @@ export function NewHeroSection() {
         </h1>
 
         <p className="mt-6 text-[1.05rem] text-[hsl(var(--muted-foreground))] leading-[1.75] max-w-[510px]">
-          Da sua foto a uma miniatura perfeita de você mesmo — ou dos carros mais icônicos do cinema. Filamento e resina de alta precisão para colecionadores exigentes.
+          Da sua foto a uma miniatura perfeita de você mesmo. Filamento e resina de alta precisão para presentes únicos, lembranças e colecionadores exigentes.
         </p>
 
         <div className="flex gap-4 mt-8 flex-wrap">
           <button onClick={() => document.getElementById("modalidades")?.scrollIntoView({ behavior: "smooth" })} className="btn-primary-site">Ver Modalidades</button>
           <Link to="/calculadora" className="btn-neon-site">Calcular Custo</Link>
-          <button onClick={() => document.getElementById("carros")?.scrollIntoView({ behavior: "smooth" })} className="btn-outline-site">Catálogo Velozes e Furiosos</button>
+          <button onClick={() => document.getElementById("upload")?.scrollIntoView({ behavior: "smooth" })} className="btn-outline-site">Criar Minha Miniatura</button>
         </div>
 
         <div className="flex gap-11 mt-14 pt-8 border-t border-[hsl(var(--border-custom))]">
           {[
-            { val: '50+', label: 'Modelos V&F' },
+            { val: '100%', label: 'Personalizado' },
             { val: '0.1mm', label: 'Precisão Resina' },
-            { val: '2 tipos', label: 'Modalidades' },
+            { val: 'Único', label: 'Cada Peça' },
             { val: 'BR todo', label: 'Entrega' },
           ].map(s => (
             <div key={s.label}>

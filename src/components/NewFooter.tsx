@@ -9,7 +9,7 @@ export function NewFooter() {
             SUA<span className="text-[hsl(var(--accent-orange))]">MINIATURA</span><em className="text-[hsl(var(--neon))] not-italic">3D</em>
           </div>
           <p className="text-[0.875rem] text-[hsl(var(--muted-foreground))] leading-[1.7] max-w-[280px] mb-5">
-            Transformamos fotos em miniaturas 3D. Especialistas em miniaturas pessoais e veículos da franquia Velozes & Furiosos.
+            Transformamos fotos em miniaturas 3D personalizadas. Presentes únicos, lembranças e peças colecionáveis com impressão de alta precisão.
           </p>
           <div className="flex gap-3">
             {['IG', 'YT', 'WA', 'TK'].map(s => (
@@ -22,9 +22,9 @@ export function NewFooter() {
           <div className="font-bebas text-[0.95rem] tracking-[3px] text-white mb-4">Modalidades</div>
           <ul className="flex flex-col gap-2.5 list-none">
             <li><a className="text-[0.875rem] text-[hsl(var(--muted-foreground))] no-underline hover:text-[hsl(var(--accent-orange))] transition-colors cursor-pointer">Miniatura Pessoal</a></li>
-            <li><a className="text-[0.875rem] text-[hsl(var(--muted-foreground))] no-underline hover:text-[hsl(var(--accent-orange))] transition-colors cursor-pointer">Carros Velozes e Furiosos</a></li>
             <li><a className="text-[0.875rem] text-[hsl(var(--muted-foreground))] no-underline hover:text-[hsl(var(--accent-orange))] transition-colors cursor-pointer">Impressão Filamento</a></li>
             <li><a className="text-[0.875rem] text-[hsl(var(--muted-foreground))] no-underline hover:text-[hsl(var(--accent-orange))] transition-colors cursor-pointer">Impressão Resina</a></li>
+            <li><a className="text-[0.875rem] text-[hsl(var(--muted-foreground))] no-underline hover:text-[hsl(var(--accent-orange))] transition-colors cursor-pointer">Presentes Corporativos</a></li>
           </ul>
         </div>
 

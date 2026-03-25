@@ -80,7 +80,7 @@ export function NewUploadSection() {
           <div className="section-label section-label-neon">// AI Converter</div>
           <h2 className="section-title">FOTO PARA<br />ARQUIVO 3D</h2>
           <div className="divider-neon" />
-          <p className="section-desc">Envie uma foto — de você ou do seu carro — e nossa IA converte em arquivo 3D com precisão milimétrica, pronto para filamento ou resina.</p>
+          <p className="section-desc">Envie uma foto sua e nossa IA converte em arquivo 3D com precisão milimétrica, pronto para filamento ou resina.</p>
 
           <div className="flex flex-col gap-0 mt-8">
             {steps.map((step, i) => (
@@ -112,7 +112,7 @@ export function NewUploadSection() {
                 <path d="M20 48 L44 48" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.4"/>
               </svg>
               <div className="font-bebas text-[1.5rem] tracking-[3px] text-white mb-2">ARRASTE SUA FOTO</div>
-              <div className="font-mono-tech text-[0.68rem] tracking-[2px] text-[hsl(var(--muted-foreground))] mb-4">Clique para selecionar — carro ou pessoa!</div>
+              <div className="font-mono-tech text-[0.68rem] tracking-[2px] text-[hsl(var(--muted-foreground))] mb-4">Clique para selecionar sua foto</div>
               <div className="flex gap-2 justify-center mb-4">
                 {['JPG', 'PNG', 'HEIC', 'WEBP'].map(f => (
                   <span key={f} className="font-mono-tech text-[0.58rem] tracking-[1px] px-2 py-0.5 border border-[hsl(var(--border-custom))] text-[hsl(var(--muted-foreground))] uppercase">{f}</span>
