@@ -11,11 +11,9 @@ const scaleData = [
 ];
 
 export default function Calculator() {
-  const [tech, setTech] = useState<'fil' | 'res'>('fil');
   const [scaleIdx, setScaleIdx] = useState(2);
   const [modalIdx, setModalIdx] = useState(0);
   const [filMat, setFilMat] = useState(8);
-  const [resMat, setResMat] = useState(25);
   const [infill, setInfill] = useState(20);
   const [supIdx, setSupIdx] = useState(0);
   const [finish, setFinish] = useState(80);
@@ -28,12 +26,11 @@ export default function Calculator() {
   const result = useMemo(() => {
     const sd = scaleData[scaleIdx];
     const grams = sd.grams;
-    const matPPG = tech === 'fil' ? filMat : resMat;
     const infillMod = 0.3 + (infill / 100) * 0.7;
     const supMod = [0, 0.12, 0.28][supIdx];
     const baseCost = [0, 15, 40][baseIdx];
-    const modalCostMod = [1.1, 1.0, 1.0][modalIdx];
-    const matCost = grams * matPPG * infillMod * (1 + supMod) * modalCostMod;
+    const modalCostMod = [1.1, 1.0][modalIdx];
+    const matCost = grams * filMat * infillMod * (1 + supMod) * modalCostMod;
     const opCost = finish + urgency;
     const frete = region * freteType;
     const infraCost = baseCost + frete;
@@ -43,10 +40,10 @@ export default function Calculator() {
     const total = subtotal - discAmt;
     const estWeight = Math.round(grams * infillMod);
     return { sd, matCost, opCost, infraCost, baseCost, frete, disc, discAmt, total, estWeight, qty };
-  }, [tech, scaleIdx, modalIdx, filMat, resMat, infill, supIdx, finish, baseIdx, urgency, region, freteType, qty]);
+  }, [scaleIdx, modalIdx, filMat, infill, supIdx, finish, baseIdx, urgency, region, freteType, qty]);
 
   const fmt = (n: number) => n.toFixed(2).replace('.', ',');
-  const modalLabels = ['Miniatura Pessoal', 'Carro Velozes e Furiosos', 'Personalizado'];
+  const modalLabels = ['Miniatura Pessoal', 'Personalizado'];
 
   return (
     <div className="min-h-screen" style={{ background: 'hsl(var(--bg))' }}>
@@ -57,34 +54,21 @@ export default function Calculator() {
         <div className="relative z-[2]">
           <span className="font-mono-tech text-[0.68rem] tracking-[4px] text-[hsl(var(--neon))] block mb-3">// Calculadora de Impressão 3D</span>
           <h1 className="font-bebas text-[clamp(2.5rem,5vw,4.5rem)] tracking-[2px] text-white leading-[0.9] mb-4">CALCULE O <span className="text-[hsl(var(--neon))]">CUSTO</span><br />DA SUA MINIATURA</h1>
-          <p className="text-[1rem] text-[hsl(var(--muted-foreground))] max-w-[500px] leading-[1.7]">Filamento FDM ou resina UV — configure material, escala, acabamento e quantidade. Orçamento instantâneo e transparente.</p>
+          <p className="text-[1rem] text-[hsl(var(--muted-foreground))] max-w-[500px] leading-[1.7]">Filamento PLA de alta qualidade — configure escala, acabamento e quantidade. Orçamento instantâneo e transparente.</p>
         </div>
       </div>
 
-      {/* Tech Selector */}
+      {/* Tech Info */}
       <div className="px-[5vw] pt-10">
-        <div className="font-mono-tech text-[0.65rem] tracking-[3px] text-[hsl(var(--muted-foreground))] mb-4 uppercase">// Selecione a tecnologia de impressão</div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-[2px]" style={{ background: 'hsl(var(--border-custom))' }}>
-          <button onClick={() => setTech('fil')} className={`p-5 flex items-center gap-5 cursor-pointer transition-all border-none text-left relative overflow-hidden ${tech === 'fil' ? 'bg-[hsl(var(--surface2))]' : 'bg-[hsl(var(--surface))]'}`}>
-            <div className="w-11 h-11 flex-shrink-0 flex items-center justify-center" style={{ background: 'rgba(232,80,10,0.1)', border: '1px solid rgba(232,80,10,0.25)' }}>
-              <span className="text-[hsl(var(--accent-orange))]">⬡</span>
-            </div>
-            <div>
-              <div className="font-bebas text-[1.2rem] tracking-[2px] text-white">Filamento FDM</div>
-              <div className="font-mono-tech text-[0.62rem] tracking-[1px] text-[hsl(var(--muted-foreground))] mt-0.5">PLA · PETG · ABS · TPU — 0.1 a 0.3mm</div>
-            </div>
-            <div className={`absolute bottom-0 left-0 right-0 h-[3px] transition-transform origin-left ${tech === 'fil' ? 'scale-x-100' : 'scale-x-0'}`} style={{ background: 'hsl(var(--accent-orange))' }} />
-          </button>
-          <button onClick={() => setTech('res')} className={`p-5 flex items-center gap-5 cursor-pointer transition-all border-none text-left relative overflow-hidden ${tech === 'res' ? 'bg-[hsl(var(--surface2))]' : 'bg-[hsl(var(--surface))]'}`}>
-            <div className="w-11 h-11 flex-shrink-0 flex items-center justify-center" style={{ background: 'rgba(0,212,255,0.08)', border: '1px solid rgba(0,212,255,0.2)' }}>
-              <span className="text-[hsl(var(--neon))]">◇</span>
-            </div>
-            <div>
-              <div className="font-bebas text-[1.2rem] tracking-[2px] text-white">Resina UV</div>
-              <div className="font-mono-tech text-[0.62rem] tracking-[1px] text-[hsl(var(--muted-foreground))] mt-0.5">Standard · ABS-Like · Flexível — 0.02 a 0.1mm</div>
-            </div>
-            <div className={`absolute bottom-0 left-0 right-0 h-[3px] transition-transform origin-left ${tech === 'res' ? 'scale-x-100' : 'scale-x-0'}`} style={{ background: 'hsl(var(--neon))' }} />
-          </button>
+        <div className="font-mono-tech text-[0.65rem] tracking-[3px] text-[hsl(var(--muted-foreground))] mb-4 uppercase">// Tecnologia de impressão</div>
+        <div className="p-5 flex items-center gap-5 border border-[hsl(var(--border-custom))]" style={{ background: 'hsl(var(--surface2))' }}>
+          <div className="w-11 h-11 flex-shrink-0 flex items-center justify-center" style={{ background: 'rgba(232,80,10,0.1)', border: '1px solid rgba(232,80,10,0.25)' }}>
+            <span className="text-[hsl(var(--accent-orange))]">⬡</span>
+          </div>
+          <div>
+            <div className="font-bebas text-[1.2rem] tracking-[2px] text-white">Filamento PLA</div>
+            <div className="font-mono-tech text-[0.62rem] tracking-[1px] text-[hsl(var(--muted-foreground))] mt-0.5">Impressão FDM com filamento PLA de alta qualidade — 0.1 a 0.3mm</div>
+          </div>
         </div>
       </div>
 
@@ -95,7 +79,7 @@ export default function Calculator() {
           <div className="space-y-6">
             {/* Tipo de Peça */}
             <div className="p-8 border border-[hsl(var(--border-custom))] relative" style={{ background: 'hsl(var(--surface))' }}>
-              <div className="absolute top-0 left-[10%] right-[10%] h-[2px]" style={{ background: tech === 'fil' ? 'linear-gradient(90deg,transparent,hsl(var(--accent-orange)),transparent)' : 'linear-gradient(90deg,transparent,hsl(var(--neon)),transparent)' }} />
+              <div className="absolute top-0 left-[10%] right-[10%] h-[2px]" style={{ background: 'linear-gradient(90deg,transparent,hsl(var(--accent-orange)),transparent)' }} />
               <div className="font-bebas text-[1.2rem] tracking-[3px] text-white mb-6 pb-4 border-b border-[hsl(var(--border-custom))] flex items-center gap-3">Tipo de Peça <span className="font-mono-tech text-[0.65rem] tracking-[2px] text-[hsl(var(--muted-foreground))]">// defina o que será impresso</span></div>
               
               <div className="mb-5">
@@ -126,30 +110,16 @@ export default function Calculator() {
 
             {/* Material */}
             <div className="p-8 border border-[hsl(var(--border-custom))]" style={{ background: 'hsl(var(--surface))' }}>
-              <div className="font-bebas text-[1.2rem] tracking-[3px] text-white mb-6 pb-4 border-b border-[hsl(var(--border-custom))]">Material <span className="font-mono-tech text-[0.65rem] tracking-[2px] text-[hsl(var(--muted-foreground))]">{tech === 'fil' ? '// filamento FDM' : '// resina UV'}</span></div>
+              <div className="font-bebas text-[1.2rem] tracking-[3px] text-white mb-6 pb-4 border-b border-[hsl(var(--border-custom))]">Material <span className="font-mono-tech text-[0.65rem] tracking-[2px] text-[hsl(var(--muted-foreground))]">// filamento PLA</span></div>
 
-              {tech === 'fil' ? (
-                <div className="mb-5">
-                  <label className="block font-mono-tech text-[0.63rem] tracking-[2px] text-[hsl(var(--muted-foreground))] uppercase mb-2">Tipo de Filamento</label>
-                  <select className="calc-select" value={filMat} onChange={e => setFilMat(Number(e.target.value))}>
-                    <option value={8}>PLA Standard — R$ 8/10g</option>
-                    <option value={12}>PETG — R$ 12/10g</option>
-                    <option value={15}>ABS Premium — R$ 15/10g</option>
-                    <option value={18}>PLA+ Silk — R$ 18/10g</option>
-                    <option value={22}>TPU Flexível — R$ 22/10g</option>
-                  </select>
-                </div>
-              ) : (
-                <div className="mb-5">
-                  <label className="block font-mono-tech text-[0.63rem] tracking-[2px] text-[hsl(var(--muted-foreground))] uppercase mb-2">Tipo de Resina</label>
-                  <select className="calc-select" value={resMat} onChange={e => setResMat(Number(e.target.value))}>
-                    <option value={25}>Resina Standard UV — R$ 25/10g</option>
-                    <option value={35}>Resina ABS-Like — R$ 35/10g</option>
-                    <option value={45}>Resina Dental/Engineering — R$ 45/10g</option>
-                    <option value={20}>Resina Flexível — R$ 20/10g</option>
-                  </select>
-                </div>
-              )}
+              <div className="mb-5">
+                <label className="block font-mono-tech text-[0.63rem] tracking-[2px] text-[hsl(var(--muted-foreground))] uppercase mb-2">Tipo de Filamento</label>
+                <select className="calc-select" value={filMat} onChange={e => setFilMat(Number(e.target.value))}>
+                  <option value={8}>PLA Standard — R$ 8/10g</option>
+                  <option value={12}>PLA+ Premium — R$ 12/10g</option>
+                  <option value={18}>PLA Silk — R$ 18/10g</option>
+                </select>
+              </div>
 
               <div className="mb-5">
                 <label className="flex justify-between font-mono-tech text-[0.63rem] tracking-[2px] text-[hsl(var(--muted-foreground))] uppercase mb-2">Infill <em className="not-italic text-[hsl(var(--neon))]">{infill}%</em></label>
@@ -225,7 +195,7 @@ export default function Calculator() {
               <div className="font-mono-tech text-[0.65rem] tracking-[3px] text-[hsl(var(--muted-foreground))] uppercase mb-5 pb-4 border-b border-[hsl(var(--border-custom))]">Resumo do Orçamento</div>
 
               {[
-                ['Tecnologia', tech === 'fil' ? 'Filamento FDM' : 'Resina UV'],
+                ['Tecnologia', 'Filamento PLA'],
                 ['Modalidade', modalLabels[modalIdx]],
                 ['Escala', result.sd.label],
                 ['Peso estimado', `~${result.estWeight}g`],
@@ -260,40 +230,6 @@ export default function Calculator() {
               <div className="mt-4 text-center font-mono-tech text-[0.58rem] tracking-[1px] opacity-50 text-[hsl(var(--muted-foreground))]">* Valores estimados. Confirmação após análise do arquivo 3D.</div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Compare Table */}
-      <div className="px-[5vw] py-12" style={{ background: 'hsl(var(--surface))' }}>
-        <div className="h-px mb-12" style={{ background: 'linear-gradient(90deg,transparent,hsl(var(--border-custom)),transparent)' }} />
-        <div className="font-bebas text-[1.6rem] tracking-[2px] text-white mb-6">Filamento vs Resina — Comparativo Técnico</div>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr>
-                <th className="font-mono-tech text-[0.65rem] tracking-[2px] text-[hsl(var(--muted-foreground))] uppercase p-3 border-b border-[hsl(var(--border-custom))] text-left w-[38%]" style={{ background: 'hsl(var(--surface2))' }}>Característica</th>
-                <th className="font-mono-tech text-[0.65rem] tracking-[2px] text-[hsl(var(--muted-foreground))] uppercase p-3 border-b border-[hsl(var(--border-custom))] text-left" style={{ background: 'hsl(var(--surface2))' }}>Filamento FDM</th>
-                <th className="font-mono-tech text-[0.65rem] tracking-[2px] text-[hsl(var(--muted-foreground))] uppercase p-3 border-b border-[hsl(var(--border-custom))] text-left" style={{ background: 'hsl(var(--surface2))' }}>Resina UV</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                ['Resolução de camada', '0.1 – 0.3 mm', '0.02 – 0.1 mm'],
-                ['Acabamento superficial', 'Marcas de camada visíveis', 'Superfície lisa e suave'],
-                ['Fidelidade de rosto', 'Média', 'Alta — ideal para miniaturas'],
-                ['Resistência mecânica', 'Boa — ABS e PETG', 'Frágil sem pós-cura'],
-                ['Tempo de impressão', '4 – 12 horas', '2 – 6 horas'],
-                ['Custo por peça', 'Menor custo', 'Custo mais elevado'],
-                ['Ideal para', 'Carros V&F, peças grandes', 'Miniaturas pessoais, detalhes finos'],
-              ].map(([feat, fil, res]) => (
-                <tr key={feat} className="hover:bg-[rgba(30,42,56,0.3)]">
-                  <td className="text-[0.875rem] text-[hsl(var(--foreground))] p-3 border-b border-[rgba(30,42,56,0.4)]">{feat}</td>
-                  <td className="text-[0.875rem] text-[hsl(var(--foreground))] p-3 border-b border-[rgba(30,42,56,0.4)]">{fil}</td>
-                  <td className="text-[0.875rem] text-[hsl(var(--foreground))] p-3 border-b border-[rgba(30,42,56,0.4)]">{res}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
       </div>
 

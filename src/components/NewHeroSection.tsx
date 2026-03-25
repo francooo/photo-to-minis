@@ -164,7 +164,7 @@ export function NewHeroSection() {
         <div className="flex gap-11 mt-14 pt-8 border-t border-[hsl(var(--border-custom))]">
           {[
             { val: '100%', label: 'Personalizado' },
-            { val: '0.1mm', label: 'Precisão Resina' },
+            { val: '0.1mm', label: 'Precisão PLA' },
             { val: 'Único', label: 'Cada Peça' },
             { val: 'BR todo', label: 'Entrega' },
           ].map(s => (

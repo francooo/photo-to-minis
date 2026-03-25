@@ -80,7 +80,7 @@ export function NewUploadSection() {
           <div className="section-label section-label-neon">// AI Converter</div>
           <h2 className="section-title">FOTO PARA<br />ARQUIVO 3D</h2>
           <div className="divider-neon" />
-          <p className="section-desc">Envie uma foto sua e nossa IA converte em arquivo 3D com precisão milimétrica, pronto para filamento ou resina.</p>
+          <p className="section-desc">Envie uma foto sua e nossa IA converte em arquivo 3D com precisão milimétrica, pronto para impressão em filamento PLA.</p>
 
           <div className="flex flex-col gap-0 mt-8">
             {steps.map((step, i) => (
