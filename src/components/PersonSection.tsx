@@ -29,7 +29,7 @@ export function PersonSection() {
           <div className="section-label section-label-violet">// Sua Imagem em 3D</div>
           <h2 className="section-title">DE FOTO A<br /><span style={{ color: 'hsl(var(--violet2))' }}>MINIATURA</span><br />REAL</h2>
           <div className="divider-violet" />
-          <p className="section-desc">Nossa tecnologia de IA analisa sua foto, reconstrói sua geometria facial e corporal e gera um arquivo 3D preciso — pronto para impressão em filamento ou resina de alta definição.</p>
+          <p className="section-desc">Nossa tecnologia de IA analisa sua foto, reconstrói sua geometria facial e corporal e gera um arquivo 3D preciso — pronto para impressão em filamento PLA de alta qualidade.</p>
 
           <div className="flex flex-col gap-0 mt-9">
             {steps.map((step, i) => (
