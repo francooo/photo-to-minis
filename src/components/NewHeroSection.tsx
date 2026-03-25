@@ -152,7 +152,7 @@ export function NewHeroSection() {
         </h1>
 
         <p className="mt-6 text-[1.05rem] text-[hsl(var(--muted-foreground))] leading-[1.75] max-w-[510px]">
-          Da sua foto a uma miniatura perfeita de você mesmo. Filamento e resina de alta precisão para presentes únicos, lembranças e colecionadores exigentes.
+          Da sua foto a uma miniatura perfeita de você mesmo. Impressão 3D em filamento PLA de alta precisão para presentes únicos, lembranças e colecionadores exigentes.
         </p>
 
         <div className="flex gap-4 mt-8 flex-wrap">
