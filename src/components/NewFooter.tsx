@@ -22,8 +22,7 @@ export function NewFooter() {
           <div className="font-bebas text-[0.95rem] tracking-[3px] text-white mb-4">Modalidades</div>
           <ul className="flex flex-col gap-2.5 list-none">
             <li><a className="text-[0.875rem] text-[hsl(var(--muted-foreground))] no-underline hover:text-[hsl(var(--accent-orange))] transition-colors cursor-pointer">Miniatura Pessoal</a></li>
-            <li><a className="text-[0.875rem] text-[hsl(var(--muted-foreground))] no-underline hover:text-[hsl(var(--accent-orange))] transition-colors cursor-pointer">Impressão Filamento</a></li>
-            <li><a className="text-[0.875rem] text-[hsl(var(--muted-foreground))] no-underline hover:text-[hsl(var(--accent-orange))] transition-colors cursor-pointer">Impressão Resina</a></li>
+            <li><a className="text-[0.875rem] text-[hsl(var(--muted-foreground))] no-underline hover:text-[hsl(var(--accent-orange))] transition-colors cursor-pointer">Impressão Filamento PLA</a></li>
             <li><a className="text-[0.875rem] text-[hsl(var(--muted-foreground))] no-underline hover:text-[hsl(var(--accent-orange))] transition-colors cursor-pointer">Presentes Corporativos</a></li>
           </ul>
         </div>

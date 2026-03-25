@@ -16,7 +16,7 @@ export function NewHowItWorksSection() {
       num: '03',
       icon: <svg className="w-[34px] h-[34px]" viewBox="0 0 36 36" fill="none" style={{ color: 'hsl(var(--accent-orange))' }}><path d="M8 28V16L18 8L28 16V28H22V22H14V28H8Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/></svg>,
       title: 'Impressão 3D',
-      desc: 'Filamento FDM ou resina de alta resolução. Camadas de 0.05 a 0.2mm.'
+      desc: 'Filamento PLA de alta qualidade. Camadas de 0.1 a 0.2mm.'
     },
     {
       num: '04',

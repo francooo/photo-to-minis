@@ -5,7 +5,7 @@ const steps = [
   { num: '01', title: 'Envie sua Foto', desc: 'Uma foto frontal nítida é suficiente. Para maior fidelidade, envie também de perfil.' },
   { num: '02', title: 'IA Reconstrói seu Rosto', desc: 'Algoritmo mapeia traços faciais, proporções corporais e expressão para gerar a geometria 3D.' },
   { num: '03', title: 'Revisão e Ajuste', desc: 'Você aprova o preview digital antes de mandarmos para impressão.' },
-  { num: '04', title: 'Impressão & Entrega', desc: 'Resina de alta resolução (0.05mm) para máxima fidelidade e detalhamento.' },
+  { num: '04', title: 'Impressão & Entrega', desc: 'Filamento PLA de alta qualidade com camadas de 0.1mm para máxima fidelidade.' },
 ];
 
 const chips = ['Aniversário', 'Casamento', 'Corporativo', 'Action figure', 'Lembrança'];
@@ -29,7 +29,7 @@ export function PersonSection() {
           <div className="section-label section-label-violet">// Sua Imagem em 3D</div>
           <h2 className="section-title">DE FOTO A<br /><span style={{ color: 'hsl(var(--violet2))' }}>MINIATURA</span><br />REAL</h2>
           <div className="divider-violet" />
-          <p className="section-desc">Nossa tecnologia de IA analisa sua foto, reconstrói sua geometria facial e corporal e gera um arquivo 3D preciso — pronto para impressão em filamento ou resina de alta definição.</p>
+          <p className="section-desc">Nossa tecnologia de IA analisa sua foto, reconstrói sua geometria facial e corporal e gera um arquivo 3D preciso — pronto para impressão em filamento PLA de alta qualidade.</p>
 
           <div className="flex flex-col gap-0 mt-9">
             {steps.map((step, i) => (

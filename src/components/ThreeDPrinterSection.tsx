@@ -23,7 +23,7 @@ export function ThreeDPrinterSection() {
                             </li>
                             <li className="flex items-center gap-3">
                                 <span className="h-2 w-2 rounded-full bg-secondary" />
-                                Acabamento profissional em resina
+                                Acabamento profissional em filamento PLA
                             </li>
                             <li className="flex items-center gap-3">
                                 <span className="h-2 w-2 rounded-full bg-accent" />
