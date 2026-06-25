@@ -21,7 +21,7 @@ export function PersonSection() {
           <div className="w-full aspect-[1/1.1] rounded-lg overflow-hidden bg-[hsl(var(--surface))]">
             <img src={miniJordan} alt="Miniatura 3D do Michael Jordan com bola de basquete" loading="lazy" width={928} height={1152} className="w-full h-full object-cover" />
           </div>
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono-tech text-[0.6rem] tracking-[3px] uppercase whitespace-nowrap" style={{ color: 'rgba(139,92,246,0.5)' }}>Miniatura gerada via IA + impressão 3D</div>
+          
         </div>
 
         {/* Content */}
