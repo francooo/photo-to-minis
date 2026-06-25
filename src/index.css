@@ -180,7 +180,7 @@
   /* Buttons */
   .btn-primary-site {
     background: hsl(var(--accent-orange));
-    color: hsl(0 0% 100%);
+    color: hsl(0 0% 0%);
     padding: 0.85rem 2rem;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.05rem;
@@ -221,7 +221,7 @@
 
   .btn-violet-site {
     background: hsl(var(--violet));
-    color: hsl(0 0% 100%);
+    color: hsl(0 0% 0%);
     padding: 0.85rem 2rem;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.05rem;
@@ -264,7 +264,7 @@
   /* Nav CTA */
   .nav-cta {
     background: hsl(var(--accent-orange));
-    color: hsl(0 0% 100%);
+    color: hsl(0 0% 0%);
     padding: 0.45rem 1.3rem;
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.68rem;
