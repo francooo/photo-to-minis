@@ -1,4 +1,4 @@
-import { MiniPerson3DScene } from "./MiniPerson3DScene";
+import miniCraqueRonaldo from "@/assets/mini-craque-ronaldo.jpg";
 
 export function ModalitiesSection() {
   const scrollTo = (id: string) => {
@@ -18,7 +18,14 @@ export function ModalitiesSection() {
       <div className="mt-14 max-w-[800px] mx-auto">
         {/* Person Card */}
         <div onClick={() => scrollTo("miniaturas")} className="relative overflow-hidden cursor-pointer min-h-[480px] flex flex-col justify-end group" style={{ background: 'linear-gradient(135deg, #0a0818, #141028)' }}>
-          <MiniPerson3DScene />
+          <img
+            src={miniCraqueRonaldo}
+            alt="Miniatura 3D do mini craque Ronaldo Fenômeno com o corte cascão da Copa de 2002"
+            loading="lazy"
+            width={1280}
+            height={1024}
+            className="absolute inset-0 w-full h-full object-cover object-center z-0"
+          />
           <div className="absolute inset-0 transition-opacity group-hover:opacity-85 z-[1]" style={{ background: 'linear-gradient(to top, rgba(8,10,14,0.97) 0%, rgba(20,10,40,0.35) 50%, transparent 75%)' }} />
           <div className="absolute top-8 right-8 z-[3] font-mono-tech text-[0.6rem] tracking-[2px] text-[hsl(var(--violet2))] border border-[rgba(139,92,246,0.3)] px-3 py-1 bg-[rgba(8,10,14,0.6)] backdrop-blur-sm">DESTAQUE</div>
           <div className="relative z-[2] p-10">
