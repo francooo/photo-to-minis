@@ -4,8 +4,8 @@ import miniJordan from "@/assets/mini-craque-jordan.jpg";
 const steps = [
   { num: '01', title: 'Envie sua Foto', desc: 'Uma foto frontal nítida é suficiente. Para maior fidelidade, envie também de perfil.' },
   { num: '02', title: 'IA Reconstrói seu Rosto', desc: 'Algoritmo mapeia traços faciais, proporções corporais e expressão para gerar a geometria 3D.' },
-  { num: '03', title: 'Revisão e Ajuste', desc: 'Você aprova o preview digital antes de mandarmos para impressão.' },
-  { num: '04', title: 'Impressão & Entrega', desc: 'Filamento PLA de alta qualidade com camadas de 0.1mm para máxima fidelidade.' },
+  
+  { num: '03', title: 'Impressão & Entrega', desc: 'Filamento PLA de alta qualidade com camadas de 0.1mm para máxima fidelidade.' },
 ];
 
 const chips = ['Aniversário', 'Casamento', 'Corporativo', 'Action figure', 'Lembrança'];
