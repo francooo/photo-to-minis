@@ -10,7 +10,7 @@ export function ModalitiesSection() {
       <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg,transparent,hsl(var(--border-custom)),transparent)' }} />
 
       <div className="max-w-[600px] mb-0">
-        <div className="section-label">// Escolha sua modalidade</div>
+        <div className="section-label">// Nossos estilos</div>
         <h2 className="section-title">TRANSFORME-SE<br />EM UMA<br />MINIATURA 3D</h2>
         <div className="divider-accent" />
       </div>
