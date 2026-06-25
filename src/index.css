@@ -43,11 +43,11 @@
     --ring: 18 90% 48%;
 
     /* Custom colors */
-    --accent-orange: 18 90% 48%;
-    --accent-orange2: 25 100% 63%;
-    --neon: 192 100% 50%;
-    --neon2: 192 100% 37%;
-    --neon3: 160 100% 50%;
+    --accent-orange: 50 100% 50%;
+    --accent-orange2: 50 100% 62%;
+    --neon: 0 0% 100%;
+    --neon2: 0 0% 85%;
+    --neon3: 0 0% 100%;
     --violet: 263 70% 66%;
     --violet2: 263 80% 77%;
 
