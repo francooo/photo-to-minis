@@ -177,22 +177,6 @@ export function NewUploadSection() {
               )}
             </div>
           )}
-          <div className="mt-6 border border-[hsl(var(--border-custom))] px-6 py-4 flex justify-between items-center" style={{ background: 'hsl(var(--surface))' }}>
-            <div>
-              <div className="font-mono-tech text-[0.62rem] tracking-[2px] text-[hsl(var(--muted-foreground))]">TEMPO</div>
-              <div className="font-bebas text-[1.35rem] tracking-[2px] text-white">2–5 <span className="text-[0.9rem] text-[hsl(var(--muted-foreground))]">MIN</span></div>
-            </div>
-            <div className="w-px h-[38px]" style={{ background: 'hsl(var(--border-custom))' }} />
-            <div>
-              <div className="font-mono-tech text-[0.62rem] tracking-[2px] text-[hsl(var(--muted-foreground))]">FORMATOS</div>
-              <div className="font-bebas text-[1.35rem] tracking-[2px] text-white">STL/OBJ</div>
-            </div>
-            <div className="w-px h-[38px]" style={{ background: 'hsl(var(--border-custom))' }} />
-            <div>
-              <div className="font-mono-tech text-[0.62rem] tracking-[2px] text-[hsl(var(--muted-foreground))]">PRECISÃO</div>
-              <div className="font-bebas text-[1.35rem] tracking-[2px] text-white">0.1<span className="text-[0.9rem] text-[hsl(var(--muted-foreground))]">MM</span></div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
