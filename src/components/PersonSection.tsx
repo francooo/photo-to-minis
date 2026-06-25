@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MiniatureFigure3D } from "./MiniatureFigure3D";
+import miniJordan from "@/assets/mini-craque-jordan.jpg";
 
 const steps = [
   { num: '01', title: 'Envie sua Foto', desc: 'Uma foto frontal nítida é suficiente. Para maior fidelidade, envie também de perfil.' },
@@ -18,8 +18,8 @@ export function PersonSection() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
         {/* Visual placeholder */}
         <div className="relative">
-          <div className="w-full aspect-[1/1.1] rounded-lg overflow-hidden">
-            <MiniatureFigure3D />
+          <div className="w-full aspect-[1/1.1] rounded-lg overflow-hidden bg-[hsl(var(--surface))]">
+            <img src={miniJordan} alt="Miniatura 3D do Michael Jordan com bola de basquete" loading="lazy" width={928} height={1152} className="w-full h-full object-cover" />
           </div>
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono-tech text-[0.6rem] tracking-[3px] uppercase whitespace-nowrap" style={{ color: 'rgba(139,92,246,0.5)' }}>Miniatura gerada via IA + impressão 3D</div>
         </div>
