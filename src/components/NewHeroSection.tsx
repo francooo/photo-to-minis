@@ -157,7 +157,6 @@ export function NewHeroSection() {
 
         <div className="flex gap-4 mt-8 flex-wrap">
           <button onClick={() => document.getElementById("modalidades")?.scrollIntoView({ behavior: "smooth" })} className="btn-primary-site">Ver Modalidades</button>
-          <Link to="/calculadora" className="btn-neon-site">Calcular Custo</Link>
           <button onClick={() => document.getElementById("upload")?.scrollIntoView({ behavior: "smooth" })} className="btn-outline-site">Criar Minha Miniatura</button>
         </div>
 

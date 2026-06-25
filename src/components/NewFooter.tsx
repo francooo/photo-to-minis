@@ -31,7 +31,7 @@ export function NewFooter() {
           <div className="font-bebas text-[0.95rem] tracking-[3px] text-white mb-4">Serviços</div>
           <ul className="flex flex-col gap-2.5 list-none">
             <li><a className="text-[0.875rem] text-[hsl(var(--muted-foreground))] no-underline hover:text-[hsl(var(--accent-orange))] transition-colors cursor-pointer">Converter Foto → 3D</a></li>
-            <li><Link to="/calculadora" className="text-[0.875rem] text-[hsl(var(--muted-foreground))] no-underline hover:text-[hsl(var(--accent-orange))] transition-colors">Calculadora de Custo</Link></li>
+            
             <li><a className="text-[0.875rem] text-[hsl(var(--muted-foreground))] no-underline hover:text-[hsl(var(--accent-orange))] transition-colors cursor-pointer">Impressão Premium</a></li>
             <li><a className="text-[0.875rem] text-[hsl(var(--muted-foreground))] no-underline hover:text-[hsl(var(--accent-orange))] transition-colors cursor-pointer">Kits Colecionáveis</a></li>
           </ul>

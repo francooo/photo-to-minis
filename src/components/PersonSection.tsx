@@ -53,8 +53,7 @@ export function PersonSection() {
           </div>
 
           <div className="flex gap-4 mt-8">
-            <Link to="/calculadora" className="btn-violet-site">Calcular Preço</Link>
-            <button onClick={() => document.getElementById("upload")?.scrollIntoView({ behavior: "smooth" })} className="btn-outline-site">Enviar Foto</button>
+            <button onClick={() => document.getElementById("upload")?.scrollIntoView({ behavior: "smooth" })} className="btn-violet-site">Enviar Foto</button>
           </div>
         </div>
       </div>

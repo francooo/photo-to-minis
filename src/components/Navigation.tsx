@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import logo from "@/assets/logo.png";
 
 export function Navigation() {
@@ -29,7 +30,6 @@ export function Navigation() {
 
       {/* Desktop Actions */}
       <div className="hidden lg:flex gap-3 items-center">
-        <Link to="/calculadora" className="nav-cta-ghost">Calculadora</Link>
         <button onClick={() => scrollToSection("upload")} className="nav-cta">Criar Minha Mini</button>
       </div>
 
@@ -44,7 +44,6 @@ export function Navigation() {
           <button onClick={() => scrollToSection("modalidades")} className="font-mono-tech text-[0.75rem] tracking-[2px] uppercase text-left text-[hsl(var(--muted-foreground))] bg-transparent border-none cursor-pointer">Modalidades</button>
           <button onClick={() => scrollToSection("miniaturas")} className="font-mono-tech text-[0.75rem] tracking-[2px] uppercase text-left text-[hsl(var(--muted-foreground))] bg-transparent border-none cursor-pointer">Miniatura Pessoal</button>
           <button onClick={() => scrollToSection("processo")} className="font-mono-tech text-[0.75rem] tracking-[2px] uppercase text-left text-[hsl(var(--muted-foreground))] bg-transparent border-none cursor-pointer">Como Funciona</button>
-          <Link to="/calculadora" onClick={() => setIsMenuOpen(false)} className="nav-cta-ghost text-center">Calculadora</Link>
           <button onClick={() => scrollToSection("upload")} className="nav-cta text-center">Criar Minha Mini</button>
         </div>
       )}
