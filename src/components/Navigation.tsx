@@ -23,7 +23,7 @@ export function Navigation() {
 
       {/* Desktop Links */}
       <ul className="hidden lg:flex gap-8 list-none">
-        <li><button onClick={() => scrollToSection("modalidades")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Modalidades</button></li>
+        <li><button onClick={() => scrollToSection("modalidades")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Estilos</button></li>
         <li><button onClick={() => scrollToSection("miniaturas")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Miniatura Pessoal</button></li>
         <li><button onClick={() => scrollToSection("processo")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Como Funciona</button></li>
       </ul>
