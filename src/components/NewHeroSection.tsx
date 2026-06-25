@@ -46,19 +46,6 @@ export function NewHeroSection() {
           <button onClick={() => document.getElementById("upload")?.scrollIntoView({ behavior: "smooth" })} className="btn-outline-site">Criar Minha Miniatura</button>
         </div>
 
-        <div className="flex gap-11 mt-14 pt-8 border-t border-[hsl(var(--border-custom))]">
-          {[
-            { val: '100%', label: 'Personalizado' },
-            { val: '0.1mm', label: 'Precisão PLA' },
-            { val: 'Único', label: 'Cada Peça' },
-            { val: 'BR todo', label: 'Entrega' },
-          ].map(s => (
-            <div key={s.label}>
-              <div className="font-bebas text-[2.1rem] text-white tracking-[2px]">{s.val}</div>
-              <div className="font-mono-tech text-[0.62rem] tracking-[2px] text-[hsl(var(--muted-foreground))] uppercase mt-0.5">{s.label}</div>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
