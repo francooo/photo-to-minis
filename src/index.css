@@ -28,9 +28,9 @@
     --secondary: 192 100% 50%;
     --secondary-foreground: 220 30% 4%;
 
-    /* Accent: Violet */
-    --accent: 263 70% 66%;
-    --accent-foreground: 0 0% 100%;
+   /* Accent: Yellow (Brasil) */
+   --accent: 50 100% 50%;
+   --accent-foreground: 0 0% 10%;
 
     --muted: 216 25% 10%;
     --muted-foreground: 212 15% 55%;
@@ -48,8 +48,8 @@
     --neon: 0 0% 100%;
     --neon2: 0 0% 85%;
     --neon3: 0 0% 100%;
-    --violet: 263 70% 66%;
-    --violet2: 263 80% 77%;
+   --violet: 50 100% 50%;
+   --violet2: 50 100% 62%;
 
     --radius: 0.5rem;
 
