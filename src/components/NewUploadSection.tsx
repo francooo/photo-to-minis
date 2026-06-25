@@ -66,8 +66,7 @@ export function NewUploadSection() {
   const steps = [
     { num: '01', title: 'Upload da Foto', desc: 'JPG, PNG ou HEIC. Quanto mais nítida, melhor o modelo 3D.' },
     { num: '02', title: 'Análise por IA', desc: 'Identificação e reconstrução da geometria em 3D.' },
-    { num: '03', title: 'Geração do STL/OBJ', desc: 'Arquivo compatível com qualquer impressora 3D.' },
-    { num: '04', title: 'Impressão & Entrega', desc: 'Imprimimos ou você baixa o arquivo para imprimir.' },
+    { num: '03', title: 'Impressão & Entrega', desc: 'Imprimimos ou você baixa o arquivo para imprimir.' },
   ];
 
   return (
