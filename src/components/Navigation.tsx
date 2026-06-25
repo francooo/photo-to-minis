@@ -23,7 +23,7 @@ export function Navigation() {
 
       {/* Desktop Links */}
       <ul className="hidden lg:flex gap-8 list-none">
-        <li><button onClick={() => scrollToSection("modalidades")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Modalidades</button></li>
+        <li><button onClick={() => scrollToSection("modalidades")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Estilos</button></li>
         <li><button onClick={() => scrollToSection("miniaturas")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Miniatura Pessoal</button></li>
         <li><button onClick={() => scrollToSection("processo")} className="font-mono-tech text-[0.7rem] tracking-[2px] uppercase text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--neon))] transition-colors bg-transparent border-none cursor-pointer">Como Funciona</button></li>
       </ul>
@@ -41,7 +41,7 @@ export function Navigation() {
       {/* Mobile menu */}
       {isMenuOpen && (
         <div className="absolute top-[70px] left-0 right-0 bg-[hsl(var(--surface))] border-b border-[hsl(var(--border-custom))] lg:hidden flex flex-col p-6 gap-4 z-50">
-          <button onClick={() => scrollToSection("modalidades")} className="font-mono-tech text-[0.75rem] tracking-[2px] uppercase text-left text-[hsl(var(--muted-foreground))] bg-transparent border-none cursor-pointer">Modalidades</button>
+          <button onClick={() => scrollToSection("modalidades")} className="font-mono-tech text-[0.75rem] tracking-[2px] uppercase text-left text-[hsl(var(--muted-foreground))] bg-transparent border-none cursor-pointer">Estilos</button>
           <button onClick={() => scrollToSection("miniaturas")} className="font-mono-tech text-[0.75rem] tracking-[2px] uppercase text-left text-[hsl(var(--muted-foreground))] bg-transparent border-none cursor-pointer">Miniatura Pessoal</button>
           <button onClick={() => scrollToSection("processo")} className="font-mono-tech text-[0.75rem] tracking-[2px] uppercase text-left text-[hsl(var(--muted-foreground))] bg-transparent border-none cursor-pointer">Como Funciona</button>
           <button onClick={() => scrollToSection("upload")} className="nav-cta text-center">Criar Minha Mini</button>
