@@ -1,3 +1,4 @@
+import "./env";
 import express from "express";
 import path from "path";
 import { registerRoutes } from "./routes";

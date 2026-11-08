@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { createOrder } from "@/lib/orders";
 
 export function UploadSection() {
   const [formData, setFormData] = useState({
@@ -99,13 +99,7 @@ export function UploadSection() {
       formDataToSend.append("photo", file);
       formDataToSend.append("source_page", "home");
 
-      const { data, error } = await supabase.functions.invoke("create-order", {
-        body: formDataToSend,
-      });
-
-      if (error) {
-        throw new Error("Failed to submit order");
-      }
+      await createOrder(formDataToSend);
 
       setIsSuccess(true);
       toast({
