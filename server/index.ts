@@ -1,17 +1,11 @@
-import "./env";
+import "./env.js";
 import express from "express";
 import path from "path";
-import { registerRoutes } from "./routes";
+import { createApp } from "./app.js";
 
-const app = express();
+// Servidor local (npm run dev / npm start). Na Vercel quem atende é api/index.ts.
+const app = createApp();
 const PORT = 5001;
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
-
-registerRoutes(app);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(process.cwd(), "dist/public")));

@@ -1,27 +1,18 @@
-import type { Express, Request } from "express";
-import { storage } from "./storage";
-import { insertMiniatureOrderSchema } from "@shared/schema";
-import multer from "multer";
+import type { Express, Request, Response } from "express";
+import { randomUUID } from "crypto";
 import path from "path";
-import fs from "fs";
+import multer from "multer";
 import { Resend } from "resend";
+import { storage } from "./storage.js";
+import { insertMiniatureOrderSchema, type InsertMiniatureOrder } from "../shared/schema.js";
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 const NOTIFY_EMAIL = "andrewsfranco93@gmail.com";
 
-const uploadsDir = path.join(process.cwd(), "uploads");
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
-}
-
+// A foto fica em memória e é gravada no Neon (tabela order_photos).
+// Na Vercel o corpo da requisição tem limite de 4,5 MB; o frontend reduz a foto antes.
 const upload = multer({
-  storage: multer.diskStorage({
-    destination: uploadsDir,
-    filename: (req, file, cb) => {
-      const uniqueName = `${Date.now()}_${Math.random().toString(36).substring(7)}${path.extname(file.originalname)}`;
-      cb(null, uniqueName);
-    },
-  }),
+  storage: multer.memoryStorage(),
   limits: { fileSize: 10 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     if (file.mimetype.startsWith("image/")) {
@@ -36,10 +27,6 @@ function getBaseUrl(req: Request): string {
   let baseUrl = "";
   if (process.env.PUBLIC_BASE_URL) {
     baseUrl = process.env.PUBLIC_BASE_URL;
-  } else if (process.env.REPLIT_DEV_DOMAIN) {
-    baseUrl = `https://${process.env.REPLIT_DEV_DOMAIN}`;
-  } else if (process.env.REPL_EXTERNAL_URL) {
-    baseUrl = process.env.REPL_EXTERNAL_URL;
   } else {
     const protocol = req.headers["x-forwarded-proto"] || req.protocol;
     const host = req.headers["x-forwarded-host"] || req.get("host");
@@ -71,32 +58,35 @@ const box = (title: string, content: string, extraStyle = "") => `
 const line = (label: string, value: string | null) =>
   value ? `<p style="margin: 5px 0; color: #e2e8f0;"><strong>${label}:</strong> ${esc(value)}</p>` : "";
 
-export async function registerRoutes(app: Express) {
-  app.get("/api/orders/:id/download", async (req, res) => {
-    try {
-      const order = await storage.getOrder(req.params.id);
-
-      if (!order || !order.photoPath) {
-        return res.status(404).json({ error: "Order not found" });
-      }
-
-      const filePath = path.resolve(process.cwd(), order.photoPath);
-      if (!filePath.startsWith(uploadsDir) || !fs.existsSync(filePath)) {
-        console.error(`File does not exist on disk: ${filePath}`);
-        return res.status(404).json({ error: "File not found on server" });
-      }
-
-      const ext = path.extname(order.photoPath);
-      const filename = `foto-cliente-${order.name.replace(/[^\w-]+/g, "-").toLowerCase()}${ext}`;
-
-      res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
-      res.setHeader("Content-Type", "application/octet-stream");
-      fs.createReadStream(filePath).pipe(res);
-    } catch (error) {
-      console.error("Error in download route:", error);
-      res.status(500).json({ error: "Internal server error during download" });
+async function sendPhoto(req: Request<{ id: string }>, res: Response, asDownload: boolean) {
+  try {
+    const photo = await storage.getOrderPhoto(req.params.id);
+    if (!photo) {
+      return res.status(404).json({ error: "Photo not found" });
     }
-  });
+
+    res.setHeader("Content-Type", photo.contentType);
+    res.setHeader("Content-Length", String(photo.data.length));
+    // A foto de um pedido nunca muda: pode ficar em cache
+    res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+
+    if (asDownload) {
+      const order = await storage.getOrder(req.params.id);
+      const base = (order?.name ?? "cliente").replace(/[^\w-]+/g, "-").toLowerCase();
+      const ext = path.extname(photo.filename) || ".jpg";
+      res.setHeader("Content-Disposition", `attachment; filename="foto-cliente-${base}${ext}"`);
+    }
+
+    res.end(photo.data);
+  } catch (error) {
+    console.error("Error serving photo:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+export function registerRoutes(app: Express) {
+  app.get("/api/orders/:id/photo", (req, res) => sendPhoto(req, res, false));
+  app.get("/api/orders/:id/download", (req, res) => sendPhoto(req, res, true));
 
   app.post("/api/orders", upload.single("photo"), async (req, res) => {
     try {
@@ -107,16 +97,10 @@ export async function registerRoutes(app: Express) {
         return res.status(400).json({ error: "Photo is required for photo miniature orders" });
       }
 
-      const baseUrl = getBaseUrl(req);
-      const photoPath = req.file ? `uploads/${req.file.filename}` : null;
-      const photoUrl = photoPath ? `${baseUrl}/${photoPath}` : null;
-
       const validation = insertMiniatureOrderSchema.safeParse({
         name: field(body, "name") ?? "",
         email: field(body, "email") ?? "",
         phone: field(body, "phone") ?? "",
-        photoUrl,
-        photoPath,
         orderType,
         modelName: field(body, "model_name"),
         modelDisplayName: field(body, "model_display_name"),
@@ -125,11 +109,36 @@ export async function registerRoutes(app: Express) {
       });
 
       if (!validation.success) {
-        if (req.file) fs.rm(req.file.path, () => {});
         return res.status(400).json({ error: validation.error.errors });
       }
 
-      const order = await storage.createOrder(validation.data);
+      const baseUrl = getBaseUrl(req);
+      const id = randomUUID();
+      const file = req.file;
+      const filename = file
+        ? `${Date.now()}_${Math.random().toString(36).substring(2, 8)}${path.extname(file.originalname).toLowerCase() || ".jpg"}`
+        : null;
+      const photoUrl = file ? `${baseUrl}/api/orders/${id}/photo` : null;
+
+      const d = validation.data;
+      const newOrder: InsertMiniatureOrder = {
+        id,
+        name: d.name,
+        email: d.email,
+        phone: d.phone,
+        photoUrl,
+        photoPath: filename,
+        orderType: d.orderType,
+        modelName: d.modelName,
+        modelDisplayName: d.modelDisplayName,
+        modelImageUrl: d.modelImageUrl,
+        sourcePage: d.sourcePage,
+      };
+
+      const order = await storage.createOrder(
+        newOrder,
+        file ? { filename: filename!, contentType: file.mimetype, size: file.size, data: file.buffer } : undefined,
+      );
 
       if (resend) {
         try {

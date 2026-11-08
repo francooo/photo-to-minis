@@ -1,5 +1,11 @@
-import { pgTable, text, uuid, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, uuid, timestamp, integer, customType, index } from "drizzle-orm/pg-core";
 import { z } from "zod";
+
+const bytea = customType<{ data: Buffer; driverData: Buffer }>({
+  dataType() {
+    return "bytea";
+  },
+});
 
 export const miniatureOrders = pgTable("miniature_orders", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -20,6 +26,24 @@ export const miniatureOrders = pgTable("miniature_orders", {
     .$onUpdate(() => new Date()),
 });
 
+// Fotos dos pedidos, guardadas no próprio Neon. Ficam numa tabela à parte
+// para que listar pedidos não carregue os bytes das imagens.
+export const orderPhotos = pgTable(
+  "order_photos",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    orderId: uuid("order_id")
+      .notNull()
+      .references(() => miniatureOrders.id, { onDelete: "cascade" }),
+    filename: text("filename").notNull(),
+    contentType: text("content_type").notNull(),
+    size: integer("size").notNull(),
+    data: bytea("data").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("order_photos_order_id_idx").on(t.orderId)],
+);
+
 const optionalText = z.string().nullish().transform((v) => (v ? v : null));
 
 export const insertMiniatureOrderSchema = z.object({
@@ -35,5 +59,7 @@ export const insertMiniatureOrderSchema = z.object({
   sourcePage: z.string().min(1).default("home"),
 });
 
-export type InsertMiniatureOrder = z.infer<typeof insertMiniatureOrderSchema>;
+export type InsertMiniatureOrder = typeof miniatureOrders.$inferInsert;
 export type MiniatureOrder = typeof miniatureOrders.$inferSelect;
+export type NewOrderPhoto = Omit<typeof orderPhotos.$inferInsert, "orderId">;
+export type OrderPhoto = typeof orderPhotos.$inferSelect;
