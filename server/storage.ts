@@ -1,28 +1,41 @@
 import { desc, eq } from "drizzle-orm";
-import { db } from "./db";
-import { miniatureOrders, type InsertMiniatureOrder, type MiniatureOrder } from "@shared/schema";
-
-export interface IStorage {
-  createOrder(order: InsertMiniatureOrder): Promise<MiniatureOrder>;
-  getOrders(): Promise<MiniatureOrder[]>;
-  getOrder(id: string): Promise<MiniatureOrder | undefined>;
-}
+import { db } from "./db.js";
+import {
+  miniatureOrders,
+  orderPhotos,
+  type InsertMiniatureOrder,
+  type MiniatureOrder,
+  type NewOrderPhoto,
+  type OrderPhoto,
+} from "../shared/schema.js";
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-export class DatabaseStorage implements IStorage {
-  async createOrder(order: InsertMiniatureOrder): Promise<MiniatureOrder> {
-    const [result] = await db.insert(miniatureOrders).values(order).returning();
-    return result;
+export class DatabaseStorage {
+  /** Grava o pedido e, se houver, a foto na mesma transação. */
+  async createOrder(order: InsertMiniatureOrder, photo?: NewOrderPhoto): Promise<MiniatureOrder> {
+    return db.transaction(async (tx) => {
+      const [created] = await tx.insert(miniatureOrders).values(order).returning();
+      if (photo) {
+        await tx.insert(orderPhotos).values({ ...photo, orderId: created.id });
+      }
+      return created;
+    });
   }
 
   async getOrders(): Promise<MiniatureOrder[]> {
-    return await db.select().from(miniatureOrders).orderBy(desc(miniatureOrders.createdAt));
+    return db.select().from(miniatureOrders).orderBy(desc(miniatureOrders.createdAt));
   }
 
   async getOrder(id: string): Promise<MiniatureOrder | undefined> {
     if (!UUID_RE.test(id)) return undefined;
     const [result] = await db.select().from(miniatureOrders).where(eq(miniatureOrders.id, id));
+    return result;
+  }
+
+  async getOrderPhoto(orderId: string): Promise<OrderPhoto | undefined> {
+    if (!UUID_RE.test(orderId)) return undefined;
+    const [result] = await db.select().from(orderPhotos).where(eq(orderPhotos.orderId, orderId)).limit(1);
     return result;
   }
 }
