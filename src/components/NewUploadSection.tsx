@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { createOrder } from "@/lib/orders";
 import { toast } from "@/hooks/use-toast";
 
 export function NewUploadSection() {
@@ -41,11 +41,7 @@ export function NewUploadSection() {
       formData.append("order_type", "photo_miniature");
       formData.append("source_page", "upload_section");
 
-      const { data, error } = await supabase.functions.invoke("create-order", {
-        body: formData,
-      });
-
-      if (error) throw error;
+      await createOrder(formData);
 
       setFeedback("✓ PEDIDO ENVIADO COM SUCESSO!");
       toast({ title: "Pedido enviado!", description: "Entraremos em contato em breve." });

@@ -6,6 +6,10 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "0.0.0.0",
     port: 8080,
+    proxy: {
+      "/api": "http://localhost:5001",
+      "/uploads": "http://localhost:5001",
+    },
   },
   plugins: [react()].filter(Boolean),
   resolve: {
